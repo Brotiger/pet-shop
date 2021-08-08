@@ -37,7 +37,7 @@
 body
 {
 	font-family: 'Poppins', sans-serif;
-	font-size: 14px;
+	font-size: 16px;
 	font-weight: 400;
 	background: #FFFFFF;
 	color: #a5a5a5;
@@ -235,8 +235,12 @@ section
 	overflow: hidden;
 	cursor: pointer;
 }
-.button a
+.button button
 {
+	cursor: pointer;
+	border: none;
+	outline: none;
+	width: 100%;
 	display: block;
 	position: relative;
 	font-size: 16px;
@@ -289,7 +293,7 @@ section
 {
 	color: #FFFFFF;
 }
-.button:hover a
+.button:hover button
 {
 	color: #FFFFFF;
 }
@@ -974,8 +978,12 @@ section
 {
 	margin-top: 3px;
 }
-.cart_item_edit a
+.cart_item_edit button
 {
+	cursor: pointer;
+	background: none;
+	border: none;
+	outline: none;
 	font-size: 14px;
 	font-weight: 500;
 	color: #6c6a74;
@@ -985,7 +993,7 @@ section
 	-o-transition: all 200ms ease;
 	transition: all 200ms ease;
 }
-.cart_item_edit a:hover
+.cart_item_edit button:hover
 {
 	color: #1b1b1b;
 }

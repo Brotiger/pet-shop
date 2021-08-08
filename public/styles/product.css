@@ -237,8 +237,12 @@ section
 	overflow: hidden;
 	cursor: pointer;
 }
-.button a
+.button button
 {
+	outline: none;
+	cursor: pointer;
+	width: 100%;
+	border: none;
 	display: block;
 	position: relative;
 	font-size: 16px;
@@ -246,7 +250,7 @@ section
 	line-height: 57px;
 	color: #1b1b1b;
 	background: none;
-	z-index: 1;
+	z-index: 10;
 	-webkit-transition: all 200ms ease;
 	-moz-transition: all 200ms ease;
 	-ms-transition: all 200ms ease;
@@ -287,7 +291,7 @@ section
 {
 	color: #FFFFFF;
 }
-.button:hover a
+.button:hover button
 {
 	color: #FFFFFF;
 }

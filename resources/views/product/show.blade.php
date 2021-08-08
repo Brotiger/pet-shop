@@ -41,7 +41,7 @@
                             }
 
                         @endphp
-						<div class="details_image_large"><img src="/images/{{ $image }}" alt="$item->title"><div class="product_extra product_new"><a href="categories.html">{{ $item->category->title }}</a></div></div>
+						<div class="details_image_large"><img src="/images/{{ $image }}" alt="$item->title"><div class="product_extra product_new"><a href="{{ route('showCategory', $item->category->alias) }}">{{ $item->category->title }}</a></div></div>
 						<div class="details_image_thumbnails d-flex flex-row align-items-start justify-content-between">
                             @if($image != 'no_image.png')
                                 @foreach($item->images as $img)
@@ -69,7 +69,7 @@
 						<!-- In Stock -->
 						<div class="in_stock_container">
                             <div class="availability">Наличие:</div>
-                            @if($item->in_stock)
+                            @if($item->is_stoke)
                                 <span>Есть на складе</span>
                             @else
                                 <span style="color: #cc0000">Под заказ</span>
@@ -89,7 +89,7 @@
 									<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
 								</div>
 							</div>
-							<div class="button cart_button" addToCart><a href="#">В корзину</a></div>
+							<div class="button cart_button" addToCart><button>В корзину</button></div>
 						</div>
 
 						<!-- Share -->
@@ -150,7 +150,7 @@
 							<div class="product_image"><img src="/images/{{ $image }}" alt=""></div>
 							<div class="product_extra product_new"><a href="{{ route('showCategory', $product->category->alias) }}">{{ $product->category->title }}</a></div>
 							<div class="product_content">
-								<div class="product_title"><a href="{{ route('showProduct', ['category', $product->alias]) }}">{{ $product->title }}</a></div>
+								<div class="product_title"><a href="{{ route('showProduct', [$item->category->alias, $product->alias]) }}">{{ $product->title }}</a></div>
 								@if($product->new_price != null)
 									<div style="text-decoration: line-through;">{{ $product->price }} р.</div>
 									<div class="product_price">{{ $product->new_price }} р.</div>
@@ -194,9 +194,7 @@
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: (data) => {
-					}
+                    }
                 });
 		}
 	</script>

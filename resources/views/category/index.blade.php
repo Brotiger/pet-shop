@@ -1,8 +1,8 @@
 @extends('layouts.main')
 @section('title', 'SamaraComp - ' . $cat->title)
 @section('custom_css')
-    <link rel="stylesheet" type="text/css" href="styles/categories.css">
-    <link rel="stylesheet" type="text/css" href="styles/categories_responsive.css">
+    <link rel="stylesheet" type="text/css" href="/styles/categories.css">
+    <link rel="stylesheet" type="text/css" href="/styles/categories_responsive.css">
 @endsection
 @section('content')
 <!-- Home -->
@@ -74,7 +74,7 @@
 							<div class="product_image"><img src="/images/{{ $image }}" alt=""></div>
 							<div class="product_extra product_new"><a href="{{ route('showCategory', $product->category->alias) }}">{{ $product->category->title }}</a></div>
 							<div class="product_content">
-								<div class="product_title"><a href="{{ route('showProduct', ['category', $product->alias]) }}">{{ $product->title }}</a></div>
+								<div class="product_title"><a href="{{ route('showProduct', [$product->category->title, $product->alias]) }}">{{ $product->title }}</a></div>
 								@if($product->new_price != null)
 									<div style="text-decoration: line-through;">{{ $product->price }} р.</div>
 									<div class="product_price">{{ $product->new_price }} р.</div>

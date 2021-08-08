@@ -24,3 +24,6 @@ Route::get('/{cat}', [ProductController::class, 'showCategory'])->name('showCate
 Route::get('/{cat}/{alias}', [ProductController::class, 'showProduct'])->name('showProduct');
 
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
+Route::delete('/clear-cart', [CartController::class, 'clearCart'])->name('clearCart');
+Route::post('/delivery', [CartController::class, 'addDelivery'])->name('addDelivery');
+Route::delete('/delivery', [CartController::class, 'deleteDelivery'])->name('deleteDelivery');

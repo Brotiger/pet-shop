@@ -1,8 +1,8 @@
 @extends('layouts.main')
 @section('title', 'SamaraComp - Контакты')
 @section('custom_css')
-	<link rel="stylesheet" type="text/css" href="styles/contact.css">
-	<link rel="stylesheet" type="text/css" href="styles/contact_responsive.css">
+	<link rel="stylesheet" type="text/css" href="/styles/contact.css">
+	<link rel="stylesheet" type="text/css" href="/styles/contact_responsive.css">
 @endsection
 @section('content')
 <!-- Home -->
@@ -106,5 +106,5 @@
 @endsection
 @section('custom_js')
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
-	<script src="js/contact.js"></script>
+	<script src="/js/contact.js"></script>
 @endsection

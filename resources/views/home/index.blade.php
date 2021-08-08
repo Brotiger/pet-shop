@@ -19,7 +19,7 @@
 									<div class="home_slider_content"  data-animation-in="fadeIn" data-animation-out="animate-out fadeOut">
 										<div class="home_slider_title">Интернет магазин компьютерной техники в Самаре.</div>
 										<div class="home_slider_subtitle">Компьютеры и их комплектующие, бытовая техника, видео и цифровая техника, расходные материалы.</div>
-										<div class="button button_light home_button"><a href="#">К товарам</a></div>
+										<div class="button button_light home_button"><a href="#goods_block">К товарам</a></div>
 									</div>
 								</div>
 							</div>
@@ -37,7 +37,7 @@
 									<div class="home_slider_content"  data-animation-in="fadeIn" data-animation-out="animate-out fadeOut">
 										<div class="home_slider_title">Интернет-магазин «САМАРАКОМП» основан в 2008 г.</div>
 										<div class="home_slider_subtitle">На сегодняшний момент «САМАРАКОМП» - это более 60 тысяч наименований товаров от подавляющего большинства мировых производителей.</div>
-										<div class="button button_light home_button"><a href="#">К товарам</a></div>
+										<div class="button button_light home_button"><a href="#goods_block">К товарам</a></div>
 									</div>
 								</div>
 							</div>
@@ -55,7 +55,7 @@
 									<div class="home_slider_content"  data-animation-in="fadeIn" data-animation-out="animate-out fadeOut">
 										<div class="home_slider_title">Мы не забыли про детей!</div>
 										<div class="home_slider_subtitle">Прекрасные деревянные игрушки: деревянные железные дороги, пирамидки, машинки, каталки, кубики и погремушки станут прекрасным подарком для вашего ребенка.</div>
-										<div class="button button_light home_button"><a href="#">К товарам</a></div>
+										<div class="button button_light home_button"><a href="#goods_block">К товарам</a></div>
 									</div>
 								</div>
 							</div>
@@ -123,7 +123,7 @@
 
 	<!-- Products -->
 
-	<div class="products">
+	<div class="products" id="goods_block">
 		<div class="container">
 			<div class="row">
 				<div class="col">
@@ -146,7 +146,7 @@
 							<div class="product_image"><img src="/images/{{ $image }}" alt=""></div>
 							<div class="product_extra product_new"><a href="{{ route('showCategory', $product->category->alias) }}">{{ $product->category->title }}</a></div>
 							<div class="product_content">
-								<div class="product_title"><a href="{{ route('showProduct', ['category', $product->alias]) }}">{{ $product->title }}</a></div>
+								<div class="product_title"><a href="{{ route('showProduct', [$product->category->alias, $product->alias]) }}">{{ $product->title }}</a></div>
 								@if($product->new_price != null)
 									<div style="text-decoration: line-through;">{{ $product->price }} р.</div>
 									<div class="product_price">{{ $product->new_price }} р.</div>
@@ -158,7 +158,6 @@
                         @endforeach
 
 					</div>
-						
 				</div>
 			</div>
 		</div>
@@ -193,7 +192,7 @@
 				<div class="col-lg-4 icon_box_col">
 					<div class="icon_box">
 						<div class="icon_box_image"><img src="images/icon_1.svg" alt=""></div>
-						<div class="icon_box_title">Бесплатная доставка по Самаре</div>
+						<div class="icon_box_title">Бестрая доставка</div>
 						<div class="icon_box_text">
 							<p>Если товар находится на складе или в магазине, то возможна доставка на следующий день. Для других товаров приблизительную дату доставки необходимо уточнять у оператора.</p>
 						</div>

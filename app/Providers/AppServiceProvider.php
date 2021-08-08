@@ -25,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        session_start();
+
         $categories = Category::orderBy('id')->get();
 
         View::share([

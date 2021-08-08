@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Sublime project">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/styles/bootstrap4/bootstrap.min.css">
     <link href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
@@ -32,7 +32,7 @@
 							<nav class="main_nav">
 								<ul>
 									<li class="hassubs active">
-										<a href="index.html">Главная</a>
+										<a>Главная</a>
 										<ul>
 											<li><a href="{{ route('home') }}">Товары</a></li>
 											<li><a href="{{ route('cart') }}">Корзина</a></li>
@@ -40,7 +40,7 @@
 										</ul>
 									</li>
 									<li class="hassubs">
-										<a href="categories.html">Категории</a>
+										<a>Категории</a>
 										<ul>
 											@foreach($categories as $category)
 												<li><a href="{{ route('showCategory', $category->alias) }}">{{ $category->title }}</a></li>
@@ -64,7 +64,7 @@
 													c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5v-41h45.2l26.9,302.3C412.8,445.2,392.1,462,366.8,462z"/>
 											</g>
 										</svg>
-										<div>Корзина (<span id="cart-qty">{{ isset($_COOKIE['cart_id'])? \Cart::session($_COOKIE['cart_id'])->getTotalQuantity() : 0 }}</span>)</div>
+										<div>Корзина (<span id="cart-qty">{{ isset($_SESSION['cart_id'])? \Cart::session($_SESSION['cart_id'])->getTotalQuantity() : 0 }}</span>)</div>
 									</a>
 								</div>
 								<div class="search">
@@ -135,7 +135,7 @@
 				</div>
 				<ul class="page_menu_nav menu_mm">
 					<li class="page_menu_item has-children menu_mm">
-						<a href="index.html">Главная<i class="fa fa-angle-down"></i></a>
+						<a>Главная<i class="fa fa-angle-down"></i></a>
 						<ul class="page_menu_selection menu_mm">
 							<li class="page_menu_item menu_mm"><a href="{{ route('home') }}">Товары<i class="fa fa-angle-down"></i></a></li>
 							<li class="page_menu_item menu_mm"><a href="{{ route('cart') }}">Корзина<i class="fa fa-angle-down"></i></a></li>
@@ -143,7 +143,7 @@
 						</ul>
 					</li>
 					<li class="page_menu_item has-children menu_mm">
-						<a href="categories.html">Категории<i class="fa fa-angle-down"></i></a>
+						<a>Категории<i class="fa fa-angle-down"></i></a>
 						<ul class="page_menu_selection menu_mm">
 							@foreach($categories as $category)
 								<li class="page_menu_item menu_mm"><a href="{{ route('showCategory', $category->alias) }}">{{ $category->title }}<i class="fa fa-angle-down"></i></a></li>
@@ -238,6 +238,15 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="/plugins/parallax-js-master/parallax.min.js"></script>
 	<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
 	<script src="/js/custom.js"></script>
+	<script>
+		var $page = $('html, body');
+		$('a[href*="#"]').click(function() {
+			$page.animate({
+				scrollTop: $($.attr(this, 'href')).offset().top
+			}, 400);
+			return false;
+		});
+	</script>
 	@yield('custom_js')
 </body>
 </html>
