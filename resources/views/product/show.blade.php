@@ -188,21 +188,24 @@
 			let id = $('#details_name').data('id');
 			let qty = parseInt($('#quantity_input').val());
 
-			let total_qty = parseInt($('#cart-qty').text());
-			total_qty += qty;
-			$('#cart-qty').text(total_qty);
-
 			$.ajax({
-                    url: "{{route('addToCart')}}",
-                    type: "POST",
-                    data: {
-						id: id,
-                        qty: qty
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
+                url: "{{route('cart.addItem')}}",
+                type: "POST",
+                data: {
+					id: id,
+                    qty: qty
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				success: () => {
+					let total_qty = parseInt($('#cart-qty').text());
+					total_qty += qty;
+					$('#cart-qty').text(total_qty);
+				}
+			});
+
+			$('#quantity_input').val(1);
 		}
 	</script>
 @endsection

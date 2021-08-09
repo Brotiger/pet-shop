@@ -43,8 +43,8 @@
 										<i class="fa fa-chevron-down" aria-hidden="true"></i>
 										<ul>
 											<li class="product_sorting_btn" data-order="default"><span>По умолчанию</span></li>
-											<li class="product_sorting_btn" data-order="price-low-high"><span>Цена: Высокая - Низкая</span></li>
-											<li class="product_sorting_btn"  data-order="price-high-low"><span>Цена: Низкая - Высокая</span></li>
+											<li class="product_sorting_btn" data-order="price-low-high"><span>Цена: Низкая - Высокая</span></li>
+											<li class="product_sorting_btn"  data-order="price-high-low"><span>Цена: Высокая - Низкая</span></li>
 											<li class="product_sorting_btn" data-order="name-a-z"><span>Название: А - Я</span></li>
 											<li class="product_sorting_btn" data-order="name-z-a"><span>Название: Я - A</span></li>
 										</ul>

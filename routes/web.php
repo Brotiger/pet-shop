@@ -20,13 +20,21 @@ use App\Http\Controllers\ContactController;
 Route::get('/contacts', [ContactController::class, 'index'])->name('contacts');
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::get('/', [HomeController::class, 'index'])->name("home");
-Route::get('/{cat}', [ProductController::class, 'showCategory'])->name('showCategory');
-Route::get('/{cat}/{alias}', [ProductController::class, 'showProduct'])->name('showProduct');
+Route::get('/{cat}', [ProductController::class, 'showCategory'])->name('showCategory')->where('cat', '[a-zA-Z]+');
+Route::get('/{cat}/{alias}', [ProductController::class, 'showProduct'])->name('showProduct')->where(['cat' => '[a-zA-Z]+', 'alias' => '[a-zA-Z]+']);
 
-Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
-Route::delete('/clear-cart', [CartController::class, 'clearCart'])->name('clearCart');
-Route::post('/delivery', [CartController::class, 'addDelivery'])->name('addDelivery');
-Route::delete('/delivery', [CartController::class, 'deleteDelivery'])->name('deleteDelivery');
-Route::delete('/delete-from-cart', [CartController::class, 'deleteFromCart'])->name('deleteFromCart');
-Route::patch('/inc-qty', [CartController::class, 'incQty'])->name('incQty');
-Route::patch('/dec-qty', [CartController::class, 'decQty'])->name('decQty');
+Route::name('delivery.')->prefix('/delivery')->group(function(){
+    Route::post(null, [CartController::class, 'addDelivery'])->name('add');
+    Route::delete(null, [CartController::class, 'deleteDelivery'])->name('delete');
+});
+
+Route::name('cart.')->prefix('/cart')->group(function(){
+    Route::patch(null, [CartController::class, 'deleteItem'])->name('deleteItem');
+    Route::post(null, [CartController::class, 'addItem'])->name('addItem');
+    Route::delete(null, [CartController::class, 'clear'])->name('clear');
+});
+
+Route::name('qty.')->group(function(){
+    Route::patch('/inc', [CartController::class, 'incQty'])->name('inc');
+    Route::patch('/dec', [CartController::class, 'decQty'])->name('dec');
+});

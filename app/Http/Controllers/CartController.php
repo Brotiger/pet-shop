@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use CartService;
+use App\Http\Requests\CartAddItemRequest;
+use App\Http\Requests\CartDeleteItemRequest;
+use App\Http\Requests\CartQtyItemRequest;
 
 class CartController extends Controller
 {
@@ -25,7 +28,7 @@ class CartController extends Controller
         ]);
     }
 
-    public function addToCart(Request $request){
+    public function addItem(CartAddItemRequest $request){
         $product = Product::where('id', $request->id)->first();
 
         $cart = CartService::getCart();
@@ -45,7 +48,7 @@ class CartController extends Controller
         return response(null, 202);
     }
 
-    public function clearCart(){
+    public function clear(){
         $cart = CartService::getCart();
 
         $cart->clear();
@@ -78,7 +81,7 @@ class CartController extends Controller
         ], 202);
     }
 
-    public function deleteFromCart(Request $request){
+    public function deleteItem(CartDeleteItemRequest $request){
         $cart = CartService::getCart();
 
         $cart->remove($request->id);
@@ -90,7 +93,7 @@ class CartController extends Controller
         ], 202);
     }
 
-    public function incQty(Request $request){
+    public function incQty(CartQtyItemRequest $request){
         $cart = CartService::getCart();
 
         $cart->update($request->id, [
@@ -100,12 +103,12 @@ class CartController extends Controller
         return response([
             'itemTotal' => $cart->get($request->id)->getPriceSum(),
             'subTotal' => $cart->getSubTotal(),
-            'total' => $cart->getSubTotal() + isset($_SESSION['delivery'])? 1500: 0,
+            'total' => $cart->getSubTotal() + (isset($_SESSION['delivery'])? 1500 : 0),
             'cartQty' => $cart->getTotalQuantity()
         ], 202);
     }
 
-    public function decQty(Request $request){
+    public function decQty(CartQtyItemRequest $request){
         $cart = CartService::getCart();
 
         $cart->update($request->id, [
@@ -115,7 +118,7 @@ class CartController extends Controller
         return response([
             'itemTotal' => $cart->get($request->id)->getPriceSum(),
             'subTotal' => $cart->getSubTotal(),
-            'total' => $cart->getSubTotal() + isset($_SESSION['delivery'])? 1500: 0,
+            'total' => $cart->getSubTotal() + (isset($_SESSION['delivery'])? 1500: 0),
             'cartQty' => $cart->getTotalQuantity()
         ], 202);
     }

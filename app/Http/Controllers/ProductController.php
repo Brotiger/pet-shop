@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Http\Requests\ShowCategoryRequest;
 
 class ProductController extends Controller
 {
@@ -22,7 +23,7 @@ class ProductController extends Controller
         ]);
     }
 
-    public function showCategory(Request $request, $alias){
+    public function showCategory(ShowCategoryRequest $request, $alias){
         $cat = Category::where('alias', $alias)->first();
 
         $paginate = 8;
@@ -30,16 +31,16 @@ class ProductController extends Controller
 
         if(isset($request->orderBy)){
             if($request->orderBy == 'price-low-high'){
-                $products = Product::where('category_id', $cat->id)->orderBy('is_stoke', 'DESC')->orderBy('price')->paginate($paginate);
+                $products = Product::where('category_id', $cat->id)->orderBy('price')->paginate($paginate);
             }
             if($request->orderBy == 'price-high-low'){
-                $products = Product::where('category_id', $cat->id)->orderBy('is_stoke', 'DESC')->orderBy('price', 'desc')->paginate($paginate);
+                $products = Product::where('category_id', $cat->id)->orderBy('price', 'desc')->paginate($paginate);
             }
             if($request->orderBy == 'name-a-z'){
-                $products = Product::where('category_id', $cat->id)->orderBy('is_stoke', 'DESC')->orderBy('title')->paginate($paginate);
+                $products = Product::where('category_id', $cat->id)->orderBy('title')->paginate($paginate);
             }
             if($request->orderBy == 'name-z-a'){
-                $products = Product::where('category_id', $cat->id)->orderBy('is_stoke', 'DESC')->orderBy('title', 'desc')->paginate($paginate);
+                $products = Product::where('category_id', $cat->id)->orderBy('title', 'desc')->paginate($paginate);
             }
         }
 

@@ -183,8 +183,8 @@
 				deleteItemId = $(this).attr('deleteFromCart');
 
 				$.ajax({
-					url: "{{ route('deleteFromCart') }}",
-					type: "DELETE",
+					url: "{{ route('cart.deleteItem') }}",
+					type: "PATCH",
 					headers: {
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 					},
@@ -235,7 +235,7 @@
 					if(clearCart){
 						$('#cart-qty').text(0);
 						$.ajax({
-							url: "{{ route('clearCart') }}",
+							url: "{{ route('cart.clear') }}",
 							type: "DELETE",
 							headers: {
 								'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -255,7 +255,7 @@
 
 			function addDelivery(){
 				$.ajax({
-					url: "{{ route('addDelivery') }}",
+					url: "{{ route('delivery.add') }}",
 					type: "POST",
 					headers: {
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -268,7 +268,7 @@
 
 			function deleteDelivery(){
 				$.ajax({
-					url: "{{ route('deleteDelivery') }}",
+					url: "{{ route('delivery.delete') }}",
 					type: "DELETE",
 					headers: {
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -281,7 +281,7 @@
 
 			function incQty(id, quantity){
 				$.ajax({
-					url: "{{ route('incQty') }}",
+					url: "{{ route('qty.inc') }}",
 					type: "PATCH",
 					headers: {
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -301,7 +301,7 @@
 
 			function decQty(id, quantity){
 				$.ajax({
-					url: "{{ route('decQty') }}",
+					url: "{{ route('qty.dec') }}",
 					type: "PATCH",
 					headers: {
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
