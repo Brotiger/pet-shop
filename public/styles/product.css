@@ -991,11 +991,16 @@ section
 }
 .details_text
 {
-	margin-top: 49px;
+	margin-top: 19px;
 }
-.details_text p
+.details_text li
 {
 	font-weight: 500;
+}
+.details_text > label{
+	font-weight: 500;
+	font-size: 20px;
+	color: #6c6a74;
 }
 .product_quantity_container
 {

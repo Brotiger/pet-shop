@@ -73,12 +73,22 @@ class CartController extends Controller
     public function deleteDelivery(){
         $cart_id = CartService::getCartId();
 
-        if($_SESSION['delivery']){
+        if(isset($_SESSION['delivery'])){
             unset($_SESSION['delivery']);
         }
 
         return response([
             'total' => \Cart::session($cart_id)->getSubTotal()
+        ], 202);
+    }
+
+    public function deleteFromCart(Request $request){
+        $cart_id = CartService::getCartId();
+        \Cart::session($cart_id)->remove($request->id);
+
+        return response([
+            'subTotal' => \Cart::session($cart_id)->getSubTotal(),
+            'total' => \Cart::session($cart_id)->getSubTotal() + isset($_SESSION['delivery'])? 1500: 0
         ], 202);
     }
 }

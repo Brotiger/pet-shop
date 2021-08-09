@@ -27,3 +27,4 @@ Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCa
 Route::delete('/clear-cart', [CartController::class, 'clearCart'])->name('clearCart');
 Route::post('/delivery', [CartController::class, 'addDelivery'])->name('addDelivery');
 Route::delete('/delivery', [CartController::class, 'deleteDelivery'])->name('deleteDelivery');
+Route::delete('/delete-from-cart', [CartController::class, 'deleteFromCart'])->name('deleteFromCart');

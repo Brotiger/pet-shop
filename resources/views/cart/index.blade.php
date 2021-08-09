@@ -49,7 +49,7 @@
 					
 					@foreach($products as $product)
 					<!-- Cart Item -->
-					<div class="cart_item d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
+					<div class="cart_item d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start" cart_item>
 						<!-- Name -->
 						<div class="cart_item_product d-flex flex-row align-items-center justify-content-start">
 							<div class="cart_item_image">
@@ -57,7 +57,7 @@
 							</div>
 							<div class="cart_item_name_container">
 								<div class="cart_item_name"><a href="{{ route('showProduct', [$product->attributes->category, $product->attributes->alias]) }}">{{ $product->name }}</a></div>
-								<div class="cart_item_edit"><button>Убрать из корзины</button></div>
+								<div class="cart_item_edit"><button deleteFromCart="{{ $product->id }}">Убрать из корзины</button></div>
 							</div>
 						</div>
 						<!-- Price -->
@@ -177,6 +177,26 @@
 					}
 				}
 			});
+
+			$('[deleteFromCart]').click(function(){
+				$(this).parents('[cart_item]').remove();
+				deleteItemId = $(this).attr('deleteFromCart');
+
+				$.ajax({
+					url: "{{ route('deleteFromCart') }}",
+					type: "DELETE",
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					data: {
+						id: deleteItemId
+					},
+					success: (data) => {
+						$("#cart_total").text(data.total);
+						$("#sub_total").text(data.subTotal);
+					}
+				});
+			})
 
 			function clearCart(){
 				@php

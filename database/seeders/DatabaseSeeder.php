@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             CategoryTableSeeder::class,
             ProductsTableSeeder::class,
             ProductImagesTableSeeder::class,
+            CharacteristicTableSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
     }

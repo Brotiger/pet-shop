@@ -75,9 +75,16 @@
                                 <span style="color: #cc0000">Под заказ</span>
                             @endif
 						</div>
+						@if($item->characteristics)
 						<div class="details_text">
-							<p>{{ $item->description }}</p>
+							<label>Характеристики</label>
+							<ul>
+								@foreach($item->characteristics as $characteristic)
+									<li class="d-flex justify-content-between"><label>{{ $characteristic->name }}:</label> <span>{{ $characteristic->value }}</sapn></li>
+								@endforeach
+							</ul>
 						</div>
+						@endif
 
 						<!-- Product Quantity -->
 						<div class="product_quantity_container">
