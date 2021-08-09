@@ -17,7 +17,7 @@
 							<div class="home_content">
 								<div class="breadcrumbs">
 									<ul>
-										<li><a href="index.html">Главная</a></li>
+										<li><a href="{{ route('home') }}">Главная</a></li>
 										<li>Контакты</li>
 									</ul>
 								</div>
@@ -38,7 +38,7 @@
 				<div class="col-lg-8 contact_col">
 					<div class="get_in_touch">
 						<div class="section_title">Форма обратной связи</div>
-						<div class="section_subtitle">Мы постараемся ответить на вам как можно скорее</div>
+						<div class="section_subtitle">Мы постараемся ответить вам как можно скорее</div>
 						<div class="contact_form_container">
 							<form action="#" id="contact_form" class="contact_form">
 								<div class="row">
@@ -52,6 +52,11 @@
 										<label for="contact_last_name">Фамилия*</label>
 										<input type="text" id="contact_last_name" class="contact_input" required="required">
 									</div>
+								</div>
+								<div>
+									<!-- Subject -->
+									<label for="contact_company">Email*</label>
+									<input type="text" id="contact_company" class="contact_input" required="required">
 								</div>
 								<div>
 									<!-- Subject -->

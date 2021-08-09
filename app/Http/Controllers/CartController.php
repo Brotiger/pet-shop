@@ -9,13 +9,11 @@ use CartService;
 class CartController extends Controller
 {
     public function index(){
-        $cart_id = CartService::getCartId();
+        $cart = CartService::getCart();
 
-        \Cart::session($cart_id);
+        $products = $cart->getContent();
 
-        $products = \Cart::getContent();
-
-        $total = \Cart::session($cart_id)->getSubTotal();
+        $total = $cart->getSubTotal();
 
         if(isset($_SESSION['delivery'])){
             $total += 1500;
@@ -30,11 +28,9 @@ class CartController extends Controller
     public function addToCart(Request $request){
         $product = Product::where('id', $request->id)->first();
 
-        $cart_id = CartService::getCartId();
+        $cart = CartService::getCart();
 
-        \Cart::session($cart_id);
-
-        \Cart::add(array(
+        $cart->add(array(
             'id' => $product->id,
             'name' => $product->title,
             'price' => $product->new_price ? $product->new_price : $product->price,
@@ -46,49 +42,81 @@ class CartController extends Controller
             )
         ));
 
-        return response()->json(\Cart::getContent());
+        return response(null, 202);
     }
 
     public function clearCart(){
-        $cart_id = CartService::getCartId();
+        $cart = CartService::getCart();
 
-        \Cart::session($cart_id)->clear();
+        $cart->clear();
 
         return response([
-            'subTotal' => \Cart::session($cart_id)->getSubTotal(),
+            'subTotal' => $cart->getSubTotal(),
             'total' => isset($_SESSION['delivery'])? 1500: 0
         ], 202);
     }
 
     public function addDelivery(){
-        $cart_id = CartService::getCartId();
+        $cart = CartService::getCart();
 
         $_SESSION['delivery'] = 'yes';
 
         return response([
-            'total' => \Cart::session($cart_id)->getSubTotal() +  1500
+            'total' => $cart->getSubTotal() +  1500
         ], 202);
     }
 
     public function deleteDelivery(){
-        $cart_id = CartService::getCartId();
+        $cart = CartService::getCart();
 
         if(isset($_SESSION['delivery'])){
             unset($_SESSION['delivery']);
         }
 
         return response([
-            'total' => \Cart::session($cart_id)->getSubTotal()
+            'total' => $cart->getSubTotal()
         ], 202);
     }
 
     public function deleteFromCart(Request $request){
-        $cart_id = CartService::getCartId();
-        \Cart::session($cart_id)->remove($request->id);
+        $cart = CartService::getCart();
+
+        $cart->remove($request->id);
 
         return response([
-            'subTotal' => \Cart::session($cart_id)->getSubTotal(),
-            'total' => \Cart::session($cart_id)->getSubTotal() + isset($_SESSION['delivery'])? 1500: 0
+            'subTotal' => $cart->getSubTotal(),
+            'total' => $cart->getSubTotal() + isset($_SESSION['delivery'])? 1500: 0,
+            'cartQty' => $cart->getTotalQuantity()
+        ], 202);
+    }
+
+    public function incQty(Request $request){
+        $cart = CartService::getCart();
+
+        $cart->update($request->id, [
+            'quantity' => 1
+        ]);
+        
+        return response([
+            'itemTotal' => $cart->get($request->id)->getPriceSum(),
+            'subTotal' => $cart->getSubTotal(),
+            'total' => $cart->getSubTotal() + isset($_SESSION['delivery'])? 1500: 0,
+            'cartQty' => $cart->getTotalQuantity()
+        ], 202);
+    }
+
+    public function decQty(Request $request){
+        $cart = CartService::getCart();
+
+        $cart->update($request->id, [
+            'quantity' => -1
+        ]);
+
+        return response([
+            'itemTotal' => $cart->get($request->id)->getPriceSum(),
+            'subTotal' => $cart->getSubTotal(),
+            'total' => $cart->getSubTotal() + isset($_SESSION['delivery'])? 1500: 0,
+            'cartQty' => $cart->getTotalQuantity()
         ], 202);
     }
 }

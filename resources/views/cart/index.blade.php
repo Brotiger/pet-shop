@@ -67,16 +67,16 @@
 							<div class="product_quantity_container">
 								<div class="product_quantity clearfix">
 									<span>шт</span>
-									<input id="quantity_input" type="text" pattern="[0-9]*" value="{{ $product->quantity }}">
+									<input quantity_input type="number" pattern="[0-9]*" value="{{ $product->quantity }}" qty-id="{{ $product->id }}">
 									<div class="quantity_buttons">
-										<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-chevron-up" aria-hidden="true"></i></div>
-										<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
+										<div quantity_inc_button class="quantity_inc quantity_control"><i class="fa fa-chevron-up" aria-hidden="true"></i></div>
+										<div quantity_dec_button class="quantity_dec quantity_control"><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
 									</div>
 								</div>
 							</div>
 						</div>
 						<!-- Total -->
-						<div class="cart_item_total">{{ $product->price *  $product->quantity }} р.</div>
+						<div class="cart_item_total" item_total_id='{{ $product->id }}'>{{ $product->price *  $product->quantity }} р.</div>
 					</div>
 					@endforeach
 				</div>
@@ -194,9 +194,32 @@
 					success: (data) => {
 						$("#cart_total").text(data.total);
 						$("#sub_total").text(data.subTotal);
+						$('#cart-qty').text(data.cartQty);
 					}
 				});
-			})
+			});
+
+			if($('.product_quantity').length)
+			{
+				var incButton = $('[quantity_inc_button]');
+				var decButton = $('[quantity_dec_button]');
+
+				incButton.on('click', function()
+				{
+					let valueBtn = $(this).parents('.quantity_buttons').prev('[quantity_input]');
+					valueBtn.val(parseInt(valueBtn.val()) + 1);
+					incQty(valueBtn.attr('qty-id'));
+				});
+
+				decButton.on('click', function()
+				{
+					let valueBtn = $(this).parents('.quantity_buttons').prev('[quantity_input]');
+					if(valueBtn.val() > 1){
+						valueBtn.val(parseInt(valueBtn.val()) - 1);
+						decQty(valueBtn.attr('qty-id'));
+					}
+				});
+			}
 
 			function clearCart(){
 				@php
@@ -252,6 +275,45 @@
 					},
 					success: (data) =>{
 						$("#cart_total").text(data.total);
+					}
+				});
+			}
+
+			function incQty(id, quantity){
+				$.ajax({
+					url: "{{ route('incQty') }}",
+					type: "PATCH",
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					data: {
+						id: id,
+						quantity: quantity
+					},
+					success: (data) =>{
+						$(`[item_total_id=${id}]`).text(data.itemTotal);
+						$("#sub_total").text(data.subTotal);
+						$("#cart_total").text(data.total);
+						$('#cart-qty').text(data.cartQty);
+					}
+				});
+			}
+
+			function decQty(id, quantity){
+				$.ajax({
+					url: "{{ route('decQty') }}",
+					type: "PATCH",
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					data: {
+						id: id,
+					},
+					success: (data) =>{
+						$(`[item_total_id=${id}]`).text(data.itemTotal);
+						$("#sub_total").text(data.subTotal);
+						$("#cart_total").text(data.total);
+						$('#cart-qty').text(data.cartQty);
 					}
 				});
 			}

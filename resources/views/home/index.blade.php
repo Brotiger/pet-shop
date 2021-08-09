@@ -104,7 +104,7 @@
 					</div>
 					<div class="avds_small_content">
 						<div class="avds_title">На все смартфоны</div>
-						<div class="avds_link"><a href="categories.html">Подробнее</a></div>
+						<div class="avds_link"><a href="{{ route('showCategory', $categories[0]->alias) }}">Подробнее</a></div>
 					</div>
 				</div>
 			</div>
@@ -114,7 +114,7 @@
 					<div class="avds_large_content">
 						<div class="avds_title">Профессиональные фотоаппараты</div>
 						<div class="avds_text">Качественные профессиональные фотоаппараты по приемлемым ценам</div>
-						<div class="avds_link avds_link_large"><a href="categories.html">Подробнее</a></div>
+						<div class="avds_link avds_link_large"><a href="{{ route('showCategory', $categories[1]->alias) }}">Подробнее</a></div>
 					</div>
 				</div>
 			</div>
@@ -174,7 +174,7 @@
 						<div class="avds_xl_content">
 							<div class="avds_title">Необычные гаджеты</div>
 							<div class="avds_text">Необычных флешки, музыкальные колоноки, внешнии аккумуляторы и.т.п.</div>
-							<div class="avds_link avds_xl_link"><a href="categories.html">Подробнее</a></div>
+							<div class="avds_link avds_xl_link"><a href="{{ route('showCategory', $categories[2]->alias) }}">Подробнее</a></div>
 						</div>
 					</div>
 				</div>

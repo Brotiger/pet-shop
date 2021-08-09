@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-class CartCheck{
-    public function getCartId(){
+class CartCustom{
+    public function getCart(){
         if(!isset($_SESSION['cart_id'])){
             $cart_id = uniqid();
             $_SESSION['cart_id'] = $cart_id;
@@ -11,6 +11,8 @@ class CartCheck{
             $cart_id = $_SESSION['cart_id'];
         }
 
-        return $cart_id;
+        $cart = \Cart::session($cart_id);
+
+        return $cart;
     }
 }

@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
     <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/animate.css">
     <link rel="stylesheet" type="text/css" href="/styles/main_styles.css">
+    <link rel="stylesheet" type="text/css" href="/styles/custom.css">
 	<link rel="stylesheet" type="text/css" href="/styles/responsive.css">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	@yield('custom_css')

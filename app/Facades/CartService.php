@@ -6,6 +6,6 @@ use Illuminate\Support\Facades\Facade;
 
 class CartService extends Facade{
     protected static function getFacadeAccessor(){
-        return 'cartCheck'; //Нужно вернуть имя ечейки из service container куда мы положили наш service
+        return 'cartCustom'; //Нужно вернуть имя ечейки из service container куда мы положили наш service
     }
 }

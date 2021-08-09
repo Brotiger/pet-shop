@@ -28,3 +28,5 @@ Route::delete('/clear-cart', [CartController::class, 'clearCart'])->name('clearC
 Route::post('/delivery', [CartController::class, 'addDelivery'])->name('addDelivery');
 Route::delete('/delivery', [CartController::class, 'deleteDelivery'])->name('deleteDelivery');
 Route::delete('/delete-from-cart', [CartController::class, 'deleteFromCart'])->name('deleteFromCart');
+Route::patch('/inc-qty', [CartController::class, 'incQty'])->name('incQty');
+Route::patch('/dec-qty', [CartController::class, 'decQty'])->name('decQty');
