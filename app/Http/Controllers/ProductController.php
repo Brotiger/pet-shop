@@ -11,7 +11,7 @@ use App\Http\Requests\ShowCategoryRequest;
 class ProductController extends Controller
 {
     public function showProduct($cat, $alias){
-        $item = Product::where('alias', $alias)->first();
+        $item = Product::where('alias', $alias)->firstOrFail();
 
         $analogs = Product::where('alias', '!=', $alias)->orderBy('is_stoke', 'DESC')->with('category')->whereHas('category', function($category) use ($item){
             $category->where('id', $item->category->id);
@@ -24,7 +24,7 @@ class ProductController extends Controller
     }
 
     public function showCategory(ShowCategoryRequest $request, $alias){
-        $cat = Category::where('alias', $alias)->first();
+        $cat = Category::where('alias', $alias)->firstOrFail();
 
         $paginate = 8;
         $products = Product::where('category_id', $cat->id)->orderBy('is_stoke', 'DESC')->paginate($paginate);

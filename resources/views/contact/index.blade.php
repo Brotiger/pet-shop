@@ -97,11 +97,7 @@
 
 					<!-- Google Map -->
 					<div class="map">
-						<div id="google_map" class="google_map">
-							<div class="map_container">
-								<div id="map"></div>
-							</div>
-						</div>
+						<script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A9f1a042393e88c77d4a797a40d45b3783f8dd381dc668c4c423940f28d08a7bf&amp;width=100%25&amp;height=600&amp;lang=ru_RU&amp;scroll=true"></script>
 					</div>
 
 				</div>
@@ -110,6 +106,5 @@
 	</div>
 @endsection
 @section('custom_js')
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
 	<script src="/js/contact.js"></script>
 @endsection
