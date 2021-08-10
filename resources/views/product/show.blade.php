@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'SamaraComp - ' .$item->title)
+@section('title', $item->title)
 @section('custom_css')
     <link rel="stylesheet" type="text/css" href="/styles/product.css">
     <link rel="stylesheet" type="text/css" href="/styles/product_responsive.css">

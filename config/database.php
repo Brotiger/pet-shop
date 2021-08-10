@@ -54,7 +54,7 @@ return [
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
-            'prefix' => 'sasd34df43r413dasdasda_',
+            'prefix' => '',
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,

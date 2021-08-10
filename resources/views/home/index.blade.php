@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Интернет магазин компьютерной техники - SamaraComp')
+@section('title', 'интернет магазин компьютерной техники')
 @section('content')
 	<!-- Home -->
 

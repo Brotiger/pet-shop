@@ -27,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         session_start();
 
+        //при сбросе бд все ломает
         $categories = Category::orderBy('id')->get();
 
         View::share([

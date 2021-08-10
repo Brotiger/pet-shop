@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,9 @@ use App\Http\Controllers\ContactController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::middleware(['role:root'])->prefix('/admin_panel')->group(function () {
+    Route::get(null, [AdminHomeController::class, 'index']);
+});
 
 Route::get('/contacts', [ContactController::class, 'index'])->name('contacts');
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
@@ -38,3 +42,6 @@ Route::name('qty.')->group(function(){
     Route::patch('/inc', [CartController::class, 'incQty'])->name('inc');
     Route::patch('/dec', [CartController::class, 'decQty'])->name('dec');
 });
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

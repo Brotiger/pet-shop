@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'SamaraComp - Контакты')
+@section('title', 'контакты')
 @section('custom_css')
 	<link rel="stylesheet" type="text/css" href="/styles/contact.css">
 	<link rel="stylesheet" type="text/css" href="/styles/contact_responsive.css">
@@ -79,7 +79,7 @@
 						<div class="contact_info_section">
 							<div class="contact_info_title">Контактная информация</div>
 							<ul>
-								<li>Phone: <span>(846) 229-51-25</span></li>
+								<li>Телефон: <span>(846) 229-51-25</span></li>
 								<li>Email: <span>info@samaracomp.ru</span></li>
 							</ul>
 						</div>

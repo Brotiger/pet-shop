@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             ProductsTableSeeder::class,
             ProductImagesTableSeeder::class,
             CharacteristicTableSeeder::class,
+            RolesTableSeeder::class,
+            UserTableSeeder::class
         ]);
         // \App\Models\User::factory(10)->create();
     }

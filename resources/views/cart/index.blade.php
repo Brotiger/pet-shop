@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'SamaraComp - корзина')
+@section('title', 'корзина')
 @section('custom_css')
     <link rel="stylesheet" type="text/css" href="styles/cart.css">
     <link rel="stylesheet" type="text/css" href="styles/cart_responsive.css">
