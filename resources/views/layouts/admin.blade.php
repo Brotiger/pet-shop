@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Админ панель - @yield('title')</title>
 
   <!-- Google Font: Source Sans Pro -->
@@ -31,9 +32,9 @@
 <div class="wrapper">
 
   <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
+  <!--<div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="/admin/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div>
+  </div>-->
 
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -211,15 +212,7 @@
 <!-- AdminLTE App -->
 <script src="/admin/dist/js/adminlte.js"></script>
 <script src="/admin/admin.js"></script>
-<script>
-  $('[btn-close]').click(function(){
-    $(this).parent().remove();
-  });
-
-  $('[btn-delete-img]').click(function(){
-    $(this).parent().hide();
-  });
-</script>
+<script src="/js/app.js"></script>
 @yield('custom_js')
 </body>
 </html>

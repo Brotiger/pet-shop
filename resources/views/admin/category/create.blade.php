@@ -5,20 +5,19 @@
 <section class="content  pt-4">
     <div class="container-fluid">
         <div style="max-width: 600px">
-        @if(session('success'))
-        <div class="alert alert-success d-flex justify-content-between align-items-center">
-            <strong><i class="fas fa-check"></i> {{ session('success') }}</strong>
-            <button type="button" class="btn-close" btn-close><i class="far fa-times-circle"></i></button>
+        <div class="alert alert-success" style="display: none" id="alert-success">
+            <div class="d-flex justify-content-between align-items-center">
+                <strong><i class="fas fa-check"></i> <span data-text></span></strong>
+                <button type="button" class="btn-close" btn-close><i class="far fa-times-circle"></i></button>
+            </div>
         </div>
-        @endif
-        <div class="card card-danger">
+        <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title mb-0">Добавление категории</h3>
+                Добавление категории
             </div>
               <!-- /.card-header -->
               <!-- form start -->
-            <form class="addForm" action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
+            <form class="addForm" action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data" id="form">
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Название*</label>
@@ -64,4 +63,5 @@ $(function () {
   bsCustomFileInput.init();
 });
 </script>
+<script src="/js/singl/forms.js"></script>
 @endsection

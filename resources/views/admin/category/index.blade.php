@@ -18,7 +18,7 @@
           <table class="table table-striped projects">
               <thead>
                   <tr>
-                      <th>
+                      <th style="width: 5%">
                           ID
                       </th>
                       <th>

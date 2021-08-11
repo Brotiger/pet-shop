@@ -51,7 +51,12 @@ class CategoryController extends Controller
 
         $new_category->save();
 
-        return redirect()->back()->withSuccess('Категория была успешно добавлена');
+        return response([
+            'data' => [
+                'message' => 'Категория успешно добавлена' 
+            ],
+            'action' => 'reset'
+        ], 201);
     }
 
     /**
@@ -102,7 +107,11 @@ class CategoryController extends Controller
 
         $category->save();
 
-        return redirect()->back()->withSuccess('Категория была успешно обновлена');
+        return response([
+            'data' => [
+                'message' => 'Категория успешно обновлена' 
+            ]
+        ], 201);
     }
 
     /**

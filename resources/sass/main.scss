@@ -7,3 +7,19 @@
         color: #1d643b;
     }
 }
+
+table{
+    table-layout: fixed;
+    td{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.card-header{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1.1rem;
+}

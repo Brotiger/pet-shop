@@ -5,19 +5,19 @@
 <section class="content  pt-4">
     <div class="container-fluid">
         <div style="max-width: 600px">
-        @if(session('success'))
-        <div class="alert alert-success d-flex justify-content-between align-items-center">
-            <strong><i class="fas fa-check"></i> {{ session('success') }}</strong>
-            <button type="button" class="btn-close" btn-close><i class="far fa-times-circle"></i></button>
+        <div class="alert alert-success" style="display: none" id="alert-success">
+            <div class="d-flex justify-content-between align-items-center">
+                <strong><i class="fas fa-check"></i> <span data-text></span></strong>
+                <button type="button" class="btn-close" btn-close><i class="far fa-times-circle"></i></button>
+            </div>
         </div>
-        @endif
-        <div class="card card-danger">
+        <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title mb-0">Редактирование категории: {{ $category->title }}</h3>
+                Редактирование категории: {{ $category->title }}
             </div>
               <!-- /.card-header -->
               <!-- form start -->
-            <form class="addForm" action="{{ route('category.update', $category['id']) }}" method="POST" enctype="multipart/form-data">
+            <form class="addForm" action="{{ route('category.update', $category['id']) }}" method="POST" enctype="multipart/form-data" id="form">
                 @csrf
                 @method('PUT')
                 <div class="card-body">
@@ -32,7 +32,7 @@
                     <div class="form-group">
                         <label for="exampleInputPassword1">Описание</label>
                         <div>
-                            <textarea class="form-control" name="description" value="{{ $category->description }}" placeholder="Введите описание категории"></textarea>
+                            <textarea class="form-control" name="description" placeholder="Введите описание категории">{{ $category->description }}</textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -68,6 +68,7 @@
 @section('custom_js')
 <!-- bs-custom-file-input -->
 <script src="/admin/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<script src="/js/singl/forms.js"></script>
 <script>
     $(function () {
     bsCustomFileInput.init();

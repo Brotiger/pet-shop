@@ -10011,6 +10011,22 @@ h3 {
   color: #1d643b;
 }
 
+table {
+  table-layout: fixed;
+}
+table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-header {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 1.1rem;
+}
+
 .addForm textarea {
   width: 100%;
   min-height: 200px;
