@@ -9,7 +9,7 @@
 
 <div class="home">
 		<div class="home_container">
-			<div class="home_background" style="background-image:url(/images/{{ $cat->img }})"></div>
+			<div class="home_background" style="background-image:url({{ '/storage/' . $cat->img ?? '/images/categories.jpg' }})"></div>
 			<div class="home_content_container">
 				<div class="container">
 					<div class="row">
