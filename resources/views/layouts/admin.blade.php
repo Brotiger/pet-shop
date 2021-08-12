@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="/admin/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="/admin/plugins/summernote/summernote-bs4.min.css">
+  <link rel="stylesheet" href="/admin/plugins/toastr/toastr.min.css">
   <link rel="stylesheet" href="/css/app.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -211,8 +212,10 @@
 <script src="/admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/admin/dist/js/adminlte.js"></script>
+<script src="/admin/plugins/toastr/toastr.min.js"></script>
 <script src="/admin/admin.js"></script>
 <script src="/js/app.js"></script>
+<script src="/admin/dist/js/adminlte.min.js"></script>
 @yield('custom_js')
 </body>
 </html>

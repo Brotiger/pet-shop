@@ -1,5 +1,5 @@
 $('[btn-close]').click(function(){
-    $(this).parents('.alert').slideUp(300);
+    $(this).parents('.alert').slideUp(250);
 });
 
 $('[btn-delete-img]').click(function(){

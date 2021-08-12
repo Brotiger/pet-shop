@@ -10002,13 +10002,22 @@ h3 {
     border-color: #dee2e6;
   }
 }
-.btn-close {
+.alert-success .btn-close {
   border: none;
   background: none;
   padding: 0;
 }
-.btn-close i {
+.alert-success .btn-close i {
   color: #1d643b;
+}
+
+.alert-danger .btn-close {
+  border: none;
+  background: none;
+  padding: 0;
+}
+.alert-danger .btn-close i {
+  color: #761b18;
 }
 
 table {

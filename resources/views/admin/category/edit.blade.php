@@ -5,34 +5,31 @@
 <section class="content  pt-4">
     <div class="container-fluid">
         <div style="max-width: 600px">
-        <div class="alert alert-success" style="display: none" id="alert-success">
-            <div class="d-flex justify-content-between align-items-center">
-                <strong><i class="fas fa-check"></i> <span data-text></span></strong>
-                <button type="button" class="btn-close" btn-close><i class="far fa-times-circle"></i></button>
-            </div>
-        </div>
         <div class="card card-primary">
             <div class="card-header">
                 Редактирование категории: {{ $category->title }}
             </div>
               <!-- /.card-header -->
               <!-- form start -->
-            <form class="addForm" action="{{ route('category.update', $category['id']) }}" method="POST" enctype="multipart/form-data" id="form">
+            <form class="addForm" action="{{ route('category.update', $category['id']) }}" method="POST" enctype="multipart/form-data" id="editForm">
                 @csrf
                 @method('PUT')
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Название*</label>
                         <input type="text" name="title" value="{{ $category->title }}" class="form-control" placeholder="Введите название категории" required>
+                        <span class="text-danger" error-message id="error-title" style="display: none"></span>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Псевдоним*</label>
                         <input type="text" name="alias" value="{{ $category->alias }}" class="form-control" placeholder="Введите псевдоним, который будет использоваться в url" required>
+                        <span class="text-danger" error-message id="error-alias" style="display: none"></span>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Описание</label>
                         <div>
                             <textarea class="form-control" name="description" placeholder="Введите описание категории">{{ $category->description }}</textarea>
+                            <span class="text-danger" error-message id="error-description" style="display: none"></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -43,6 +40,7 @@
                                 <label class="custom-file-label" for="inputFile">Выбирете файл</label>
                             </div>
                         </div>
+                        <span class="text-danger" error-message id="error-img" style="display: none"></span>
                     </div>
                     @if($category->img)
                     <div>

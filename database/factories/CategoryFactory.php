@@ -24,7 +24,6 @@ class CategoryFactory extends Factory
         return [
             'title' => $this->faker->word,
             'description' => $this->faker->text,
-            'img' => rand(0, 1)? 'categories.jpg' : 'avds_large.jpg',
             'alias' => $this->faker->unique()->word
         ];
     }

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use App\Http\Requests\Admin\CategoryStoreRequest;
+use App\Http\Requests\Admin\CategoryUpdateRequest;
 
 class CategoryController extends Controller
 {
@@ -14,11 +16,20 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::orderBy('created_at', 'DESC')->get();
+        $next_query = [
+            'alias' => '',
+            'title' => '',
+        ];
 
-        return view('admin.category.index', compact('categories'));
+        $categories = Category::orderBy('created_at', 'DESC')->paginate(5);
+
+        if($request->ajax()){
+            return view('admin.ajax.category.index', compact('categories', 'next_query'))->render();
+        }
+
+        return view('admin.category.index', compact('categories', 'next_query'));
     }
 
     /**
@@ -37,7 +48,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryStoreRequest $request)
     {
         $new_category = new Category();
         $new_category->title = $request->title;
@@ -53,7 +64,7 @@ class CategoryController extends Controller
 
         return response([
             'data' => [
-                'message' => 'Категория успешно добавлена' 
+                'message' => 'Категория добавлена' 
             ],
             'action' => 'reset'
         ], 201);
@@ -88,7 +99,7 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryUpdateRequest $request, Category $category)
     {
         $category->title = $request->title;
         $category->alias = $request->alias;
@@ -109,7 +120,7 @@ class CategoryController extends Controller
 
         return response([
             'data' => [
-                'message' => 'Категория успешно обновлена' 
+                'message' => 'Категория обновлена' 
             ]
         ], 201);
     }
@@ -120,9 +131,19 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Request $request, Category $category)
     {
         $category->delete();
-        return redirect()->back()->withSuccess('Категория была успешно удалена');
+
+        $categories = Category::orderBy('created_at', 'DESC')->paginate(5);
+
+        $next_query = [
+            'alias' => '',
+            'title' => '',
+        ];
+
+        if($request->ajax()){
+            return view('admin.ajax.category.index', compact('categories', 'next_query'))->render();
+        }
     }
 }

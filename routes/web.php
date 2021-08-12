@@ -27,8 +27,8 @@ Route::middleware(['role:root'])->prefix('/admin_panel')->group(function () {
 Route::get('/contacts', [ContactController::class, 'index'])->name('contacts');
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::get('/', [HomeController::class, 'index'])->name("home");
-Route::get('/{cat}', [ProductController::class, 'showCategory'])->name('showCategory')->where('cat', '[a-zA-Z]+');
-Route::get('/{cat}/{alias}', [ProductController::class, 'showProduct'])->name('showProduct')->where(['cat' => '[a-zA-Z]+', 'alias' => '[a-zA-Z]+']);
+Route::get('/{cat}', [ProductController::class, 'showCategory'])->name('showCategory');
+Route::get('/{cat}/{alias}', [ProductController::class, 'showProduct'])->name('showProduct');
 
 Route::name('delivery.')->prefix('/delivery')->group(function(){
     Route::post(null, [CartController::class, 'addDelivery'])->name('add');

@@ -1,10 +1,24 @@
-.btn-close{
-    border: none;
-    background: none;
-    padding: 0;
+.alert-success{
+    .btn-close{
+        border: none;
+        background: none;
+        padding: 0;
 
-    i{
-        color: #1d643b;
+        i{
+            color: #1d643b;
+        }
+    }
+}
+
+.alert-danger{
+    .btn-close{
+        border: none;
+        background: none;
+        padding: 0;
+
+        i{
+            color: #761b18;
+        }
     }
 }
 

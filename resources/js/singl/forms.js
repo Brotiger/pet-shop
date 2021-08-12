@@ -1,5 +1,6 @@
-$('#form').submit(function(){
-    var formData = new FormData($('#form')[0]);
+$('#addForm, #editForm').submit(function(){
+    var form = $(this);
+    var formData = new FormData(form[0]);
 
     $.ajax({
         type: $(this).attr('method'),
@@ -12,13 +13,25 @@ $('#form').submit(function(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(data){
+            $("[error-message]").hide();
             if(data.action == 'reset'){
-                $("#form")[0].reset();
+                form[0].reset();
             }
+            toastr.success(data.data.message);
+        },
+        error: function(data){
+            $('[error-message]').attr('error-message', 'false');
+            let response = data.responseJSON;
+            for(key in response.errors){
+                $(`#error-${key}`).show().text(response.errors[key]);
+                $(`#error-${key}`).attr('error-message', 'true');
+            };
 
-            $("#alert-success span[data-text]").text(data.data.message);
-            $("#alert-success").slideDown(300);
+            $("[error-message=false]").hide();
+
+            toastr.error('Ошибка, неволидные данные');
         }
     });
+
     return false;
 });
