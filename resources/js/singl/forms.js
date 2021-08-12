@@ -29,7 +29,7 @@ $('#addForm, #editForm').submit(function(){
 
             $("[error-message=false]").hide();
 
-            toastr.error('Ошибка, неволидные данные');
+            toastr.error(data.responseJSON.message);
         }
     });
 

@@ -26,7 +26,13 @@ class CategoryController extends Controller
         $categories = Category::orderBy('created_at', 'DESC')->paginate(5);
 
         if($request->ajax()){
-            return view('admin.ajax.category.index', compact('categories', 'next_query'))->render();
+            return response([
+                'data' => [
+                    'html' => [
+                        'category' => view('admin.ajax.category.index', compact('categories', 'next_query'))->render()
+                    ]
+                ]
+            ], 201);
         }
 
         return view('admin.category.index', compact('categories', 'next_query'));
@@ -142,8 +148,14 @@ class CategoryController extends Controller
             'title' => '',
         ];
 
-        if($request->ajax()){
-            return view('admin.ajax.category.index', compact('categories', 'next_query'))->render();
-        }
+        return response([
+            'data' => [
+                'message' => 'Категория удалена',
+                'html' => [
+                    'category' => view('admin.ajax.category.index', compact('categories', 'next_query'))->render()
+                ]
+            ],
+            'action' => 'reset'
+        ], 201);
     }
 }

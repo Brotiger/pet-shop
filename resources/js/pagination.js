@@ -6,7 +6,7 @@ $('body').delegate('.page-item a', 'click',function(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(data){
-            $('#table-container').html(data);
+            $('#table-container').html(data.data.html.category);
         },
     });
     return false;

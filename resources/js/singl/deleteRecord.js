@@ -17,11 +17,11 @@ $('body').delegate('#btn-delete-record', 'click', function(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(data){
-            toastr.success('Запись успещно удалена');
-            $('#table-container').html(data);
+            toastr.success(data.data.message);
+            $('#table-container').html(data.data.html.category);
         },
         error: function(){
-            toastr.error('Ошибка, неволидные данные');
+            toastr.error(data.responseJSON.message);
         }
     });
 });
