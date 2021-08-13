@@ -17,7 +17,9 @@ $('#addForm, #editForm').submit(function(){
             if(data.action == 'reset'){
                 form[0].reset();
             }
-            toastr.success(data.data.message);
+            if(data.data.message){
+                toastr.success(data.data.message);
+            }
         },
         error: function(data){
             $('[error-message]').attr('error-message', 'false');
@@ -28,8 +30,9 @@ $('#addForm, #editForm').submit(function(){
             };
 
             $("[error-message=false]").hide();
-
-            toastr.error(data.responseJSON.message);
+            if(data.responseJSON.message){
+                toastr.error(data.responseJSON.message);
+            }
         }
     });
 

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\CategoryStoreRequest;
 use App\Http\Requests\Admin\CategoryUpdateRequest;
+use App\Http\Requests\Admin\CategoryDestroyRequest;
+use App\Http\Requests\Admin\CategoryIndexRequest;
 
 class CategoryController extends Controller
 {
@@ -16,20 +18,35 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(CategoryIndexRequest $request)
     {
+        $filter = [];
         $next_query = [
+            'id' => '',
             'alias' => '',
             'title' => '',
         ];
 
-        $categories = Category::orderBy('created_at', 'DESC')->paginate(5);
+        if($request->id != null){
+            $filter[] = ["id", "=", $request->id];
+            $next_query['id'] = $request->id;
+        }
+        if($request->title != null){
+            $filter[] = ["title", "like", '%' . $request->title . '%'];
+            $next_query['title'] = $request->title;
+        }
+        if($request->alias != null){
+            $filter[] = ["alias", "like", '%' . $request->alias . '%'];
+            $next_query['alias'] = $request->alias;
+        }
+
+        $categories = Category::where($filter)->orderBy('created_at', 'DESC')->paginate(5);
 
         if($request->ajax()){
             return response([
                 'data' => [
                     'html' => [
-                        'category' => view('admin.ajax.category.index', compact('categories', 'next_query'))->render()
+                        'category' => view('admin.ajax.category.index', compact('categories', 'next_query'))->render(),
                     ]
                 ]
             ], 201);
@@ -137,25 +154,40 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Category $category)
+    public function destroy(CategoryDestroyRequest $request, Category $category)
     {
-        $category->delete();
-
-        $categories = Category::orderBy('created_at', 'DESC')->paginate(5);
+        $filter = [];
 
         $next_query = [
+            'id' => '',
             'alias' => '',
             'title' => '',
         ];
+
+        $category->delete();
+        
+        if($request->id != null){
+            $filter[] = ["id", "=", $request->id];
+            $next_query['id'] = $request->id;
+        }
+        if($request->title != null){
+            $filter[] = ["title", "like", '%' . $request->title . '%'];
+            $next_query['title'] = $request->title;
+        }
+        if($request->alias != null){
+            $filter[] = ["alias", "like", '%' . $request->alias . '%'];
+            $next_query['alias'] = $request->alias;
+        }
+
+        $categories = Category::where($filter)->orderBy('created_at', 'DESC')->paginate(5);
 
         return response([
             'data' => [
                 'message' => 'Категория удалена',
                 'html' => [
-                    'category' => view('admin.ajax.category.index', compact('categories', 'next_query'))->render()
+                    'category' => view('admin.ajax.category.index', compact('categories', 'next_query'))->render(),
                 ]
             ],
-            'action' => 'reset'
         ], 201);
     }
 }

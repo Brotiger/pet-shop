@@ -3,11 +3,20 @@
 @section('title', 'Все категории')
 @section('content')
 @include('admin.components.warnings.deleteWarning')
+@include('admin.components.modals.searchCategory')
 <section class="content pt-4">
-    <div class="container-fluid" id="table-container">
+    <div class="container-fluid" id="category">
     <div class="card">
         <div class="card-header">
           <h3 class="card-title mb-0">Все категории</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" id="btn-modal-reset" method="GET" action="{{ route('category.index') }}">
+              <i class="fas fa-redo-alt"></i>
+            </button>
+            <button type="button" class="btn btn-tool" id="btn-modal-search">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
         </div>
         <div class="card-body p-0">
           <table class="table table-striped projects">
@@ -62,11 +71,15 @@
         </div>
         <!-- /.card-body -->
       </div>
-      {{ $categories->appends($next_query)->links('pagination.admin.bootstrap-4-v2') }}
+      <div>
+        {{ $categories->appends($next_query)->links('pagination.admin.bootstrap-4-v2') }}
+      </div>
     </div>
 </section>    
   <!-- /.content-header -->
 @endsection
 @section('custom_js')
 <script src="/js/singl/deleteRecord.js"></script>
+<script src="/js/singl/forms.js"></script>
+<script src="/js/singl/searchRecord.js"></script>
 @endsection

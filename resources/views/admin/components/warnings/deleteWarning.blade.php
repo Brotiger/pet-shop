@@ -1,6 +1,6 @@
 <div class="modal fade show" id="modal-warning" style="display: none; padding-right: 15px;" aria-modal="true" role="dialog">
     <div class="modal-dialog">
-        <div class="modal-content bg-warning">
+        <div class="modal-content bg-light">
         <div class="modal-header">
             <h4 class="modal-title">Внимание!</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">

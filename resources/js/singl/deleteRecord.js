@@ -17,11 +17,15 @@ $('body').delegate('#btn-delete-record', 'click', function(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(data){
-            toastr.success(data.data.message);
-            $('#table-container').html(data.data.html.category);
+            if(data.data.message){
+                toastr.success(data.data.message);
+            }
+            $('#category').html(data.data.html.category);
         },
         error: function(){
-            toastr.error(data.responseJSON.message);
+            if(data.responseJSON.message){
+                toastr.error(data.responseJSON.message);
+            }
         }
     });
 });
