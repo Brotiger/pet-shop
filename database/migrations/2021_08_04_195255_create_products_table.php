@@ -17,8 +17,8 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('title');
             $table->integer('price');
-            $table->boolean('is_stoke');
-            $table->text('description');
+            $table->boolean('is_stoke')->default(0);
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

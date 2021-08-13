@@ -13,6 +13,10 @@ class Product extends Model
         return $this->hasMany(ProductImage::class);
     }
 
+    public function chars(){
+        return $this->hasMany(Characteristic::class);
+    }
+
     public function category(){
         return $this->belongsTo(Category::class);
     }

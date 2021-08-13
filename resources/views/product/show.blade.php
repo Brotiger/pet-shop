@@ -7,14 +7,21 @@
 @section('content')
 <div class="home">
 		<div class="home_container">
-			<div class="home_background" style="background-image:url(/images/{{ $item->category->img }})"></div>
+			@php
+				if(!empty($item->category)){
+					$imgUrl = $item->category->img != null ? '/storage/' . $item->category->img : '/images/categories.jpg';
+				}else{
+					$imgUrl = '/images/categories.jpg';
+				}
+			@endphp
+			<div class="home_background" style="background-image:url({{ $imgUrl }})"></div>
 			<div class="home_content_container">
 				<div class="container">
 					<div class="row">
 						<div class="col">
 							<div class="home_content">
-								<div class="home_title">{{ $item->category->title }}<span>.</span></div>
-								<div class="home_text"><p>{{ $item->category->description }}</p></div>
+								<div class="home_title">{{ $item->category->title ?? 'Разное' }}<span>.</span></div>
+								<div class="home_text"><p>{{ $item->category->description ?? 'В данном разделе представленны товары без категории' }}</p></div>
 							</div>
 						</div>
 					</div>
@@ -35,20 +42,24 @@
                             $image = '';
 
                             if(count($item->images) > 0){
-                                $image = $item->images[0]['img'];
+                                $image = '/storage/' . $item->images[0]['img'];
                             }else{
-                                $image = 'no_image.png';
+                                $image = '/images/no_image.png';
                             }
 
-                        @endphp
-						<div class="details_image_large"><img src="/images/{{ $image }}" alt="$item->title"><div class="product_extra product_new"><a href="{{ route('showCategory', $item->category->alias) }}">{{ $item->category->title }}</a></div></div>
+						@endphp
+						<div class="details_image_large"><img src="{{ $image }}" alt="{{ $item->title }}">
+							@if(!empty($item->category))
+								<div class="product_extra product_new"><a href="{{ route('showCategory', $item->category->alias) }}">{{ $item->category->title }}</a></div>
+							@endif
+						</div>
 						<div class="details_image_thumbnails d-flex flex-row align-items-start justify-content-between">
                             @if($image != 'no_image.png')
                                 @foreach($item->images as $img)
                                     @if($loop->first)
-                                        <div class="details_image_thumbnail active" data-image="/images/{{ $img['img'] }}"><img src="/images/{{ $img['img'] }}" alt="{{ $item->title }}"></div>
+                                        <div class="details_image_thumbnail active" data-image="{{ '/storage/' . $img['img'] }}"><img src="{{ '/storage/' . $img['img'] }}" alt="{{ $item->title }}"></div>
                                     @else
-                                        <div class="details_image_thumbnail" data-image="/images/{{ $img['img'] }}"><img src="/images/{{ $img['img'] }}" alt="{{ $item->title }}"></div>
+                                        <div class="details_image_thumbnail" data-image="{{ '/storage/' .$img['img'] }}"><img src="{{ '/storage/' . $img['img'] }}" alt="{{ $item->title }}"></div>
                                     @endif
                                 @endforeach
                             @endif
@@ -148,16 +159,18 @@
 								if(count($product->images) > 0){
 									$image = $product->images[0]['img'];
 								}else{
-									$image = 'no_image.png';
+									$image = '/images/no_image.png';
 								}
 
 							@endphp
                         <!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="/images/{{ $image }}" alt=""></div>
-							<div class="product_extra product_new"><a href="{{ route('showCategory', $product->category->alias) }}">{{ $product->category->title }}</a></div>
+							<div class="product_image"><img src="{{ $image }}" alt=""></div>
+							@if(!empty($product->category))
+								<div class="product_extra product_new"><a href="{{ route('showCategory', $product->category->alias) }}">{{ $product->category->title }}</a></div>
+							@endif
 							<div class="product_content">
-								<div class="product_title"><a href="{{ route('showProduct', [$item->category->alias, $product->alias]) }}">{{ $product->title }}</a></div>
+								<div class="product_title"><a href="{{ route('showProduct', [$item->category->alias ?? 'different', $product->alias]) }}">{{ $product->title }}</a></div>
 								@if($product->new_price != null)
 									<div style="text-decoration: line-through;">{{ $product->price }} р.</div>
 									<div class="product_price">{{ $product->new_price }} р.</div>

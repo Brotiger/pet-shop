@@ -51,19 +51,23 @@ $('#addForm, #editForm').submit(function(){
         img.push({
             "id": ell.id.replace("imgBlock-", "")
         });
-        formData.append("img-" + i, $(this).find("[type='file']")[0].files[0]);
+        formData.append("img-" + ell.id.replace("imgBlock-", ""), $(this).find("[type='file']")[0].files[0]);
     });
-    formData.append("img", JSON.stringify(img));
+    formData.append("imgs", JSON.stringify(img));
 
     //Начадл добавления данных о характеристиках
     $("[charBlock]").each(function(i, ell){
         char.push({
-            "key": $(this).find("[key]").val(),
+            "name": $(this).find("[key]").val(),
             "value": $(this).find("[val]").val(),
             "id": ell.id.replace("charBlock-", "")
         });
     });
-    formData.append("char", JSON.stringify(char));
+    formData.append("chars", JSON.stringify(char));
+
+    $('[data-field]').each(function(i, ell){
+        formData.append(ell.name, $(this).val());
+    });
     
     $.ajax({
         type: $(this).attr('method'),

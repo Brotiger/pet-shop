@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', $cat->title)
+@section('title', $cat->title ?? 'Разное')
 @section('custom_css')
     <link rel="stylesheet" type="text/css" href="/styles/categories.css">
     <link rel="stylesheet" type="text/css" href="/styles/categories_responsive.css">
@@ -9,14 +9,21 @@
 
 <div class="home">
 		<div class="home_container">
-			<div class="home_background" style="background-image:url({{ '/storage/' . $cat->img ?? '/images/categories.jpg' }})"></div>
+			@php
+				if(!empty($cat)){
+					$imgUrl = $cat->img != null ? '/storage/' . $cat->img : '/images/categories.jpg';
+				}else{
+					$imgUrl = '/images/categories.jpg';
+				}
+			@endphp
+			<div class="home_background" style="background-image:url({{ $imgUrl }})"></div>
 			<div class="home_content_container">
 				<div class="container">
 					<div class="row">
 						<div class="col">
 							<div class="home_content">
-								<div class="home_title">{{ $cat->title }}<span>.</span></div>
-								<div class="home_text"><p>{{ $cat->description }}</p></div>
+								<div class="home_title">{{ $cat->title ?? 'Разное' }}<span>.</span></div>
+								<div class="home_text"><p>{{ $cat->description ?? 'В данном разделе представленны товары без категории' }}</p></div>
 							</div>
 						</div>
 					</div>
@@ -34,7 +41,7 @@
 					
 					<!-- Product Sorting -->
 					<div class="sorting_bar d-flex flex-md-row flex-column align-items-md-center justify-content-md-start">
-						<div class="results">Найдено <span>{{ $cat->products->count() }}</span> позиций</div>
+						<div class="results">Найдено <span>{{ $product_count }}</span> позиций</div>
 						<div class="sorting_container ml-md-auto">
 							<div class="sorting">
 								<ul class="item_sorting">
@@ -63,18 +70,20 @@
 								$image = '';
 
 								if(count($product->images) > 0){
-									$image = $product->images[0]['img'];
+									$image = '/storage/'.$product->images[0]['img'];
 								}else{
-									$image = 'no_image.png';
+									$image = '/images/no_image.png';
 								}
 
 							@endphp
                         <!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="/images/{{ $image }}" alt=""></div>
-							<div class="product_extra product_new"><a href="{{ route('showCategory', $product->category->alias) }}">{{ $product->category->title }}</a></div>
+							<div class="product_image"><img src="{{ $image }}" alt=""></div>
+							@if(!empty($cat))
+								<div class="product_extra product_new"><a href="{{ route('showCategory', $product->category->alias) }}">{{ $product->category->title }}</a></div>
+							@endif
 							<div class="product_content">
-								<div class="product_title"><a href="{{ route('showProduct', [$product->category->title, $product->alias]) }}">{{ $product->title }}</a></div>
+								<div class="product_title"><a href="{{ route('showProduct', [$product->category->title ?? 'different', $product->alias]) }}">{{ $product->title }}</a></div>
 								@if($product->new_price != null)
 									<div style="text-decoration: line-through;">{{ $product->price }} р.</div>
 									<div class="product_price">{{ $product->new_price }} р.</div>
@@ -101,7 +110,7 @@
                 $('.sorting_text').text($(this).find('span').text());
                 
                 $.ajax({
-                    url: "{{route('showCategory', $cat->alias)}}",
+                    url: "{{ !empty($cat) ? route('showCategory', $cat->alias) : route('different') }}",
                     type: "GET",
                     data: {
                         orderBy: orderBy,

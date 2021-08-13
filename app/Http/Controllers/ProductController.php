@@ -13,9 +13,16 @@ class ProductController extends Controller
     public function showProduct($cat, $alias){
         $item = Product::where('alias', $alias)->firstOrFail();
 
-        $analogs = Product::where('alias', '!=', $alias)->orderBy('is_stoke', 'DESC')->with('category')->whereHas('category', function($category) use ($item){
+        if($cat != 'different'){
+            $analogs = Product::where('alias', '!=', $alias)->orderBy('is_stoke', 'DESC')->with('category')->whereHas('category', function($category) use ($item){
             $category->where('id', $item->category->id);
-        })->limit(4)->get();
+            })->limit(4)->get();
+        }else{
+            $analogs = Product::where([
+                ['alias', '!=', $alias],
+                ['category_id', '=', null]
+                ])->orderBy('is_stoke', 'DESC')->limit(4)->get();
+        }
 
         return view('product.show', [
             'item' => $item,
@@ -28,6 +35,7 @@ class ProductController extends Controller
 
         $paginate = 8;
         $products = Product::where('category_id', $cat->id)->orderBy('is_stoke', 'DESC')->paginate($paginate);
+        $product_count = Product::where('category_id', $cat->id)->count();
 
         if(isset($request->orderBy)){
             if($request->orderBy == 'price-low-high'){
@@ -52,6 +60,40 @@ class ProductController extends Controller
 
         return view('category.index',[
             'cat' => $cat,
+            'product_count' => $product_count,
+            'products' => $products
+        ]);
+    }
+
+    public function different(ShowCategoryRequest $request){
+        $paginate = 8;
+
+        $products = Product::where('category_id', null)->orderBy('is_stoke', 'DESC')->paginate($paginate);
+        $product_count = Product::where('category_id', null)->count();
+
+        if(isset($request->orderBy)){
+            if($request->orderBy == 'price-low-high'){
+                $products = Product::where('category_id', null)->orderBy('price')->paginate($paginate);
+            }
+            if($request->orderBy == 'price-high-low'){
+                $products = Product::where('category_id', null)->orderBy('price', 'desc')->paginate($paginate);
+            }
+            if($request->orderBy == 'name-a-z'){
+                $products = Product::where('category_id', null)->orderBy('title')->paginate($paginate);
+            }
+            if($request->orderBy == 'name-z-a'){
+                $products = Product::where('category_id', null)->orderBy('title', 'desc')->paginate($paginate);
+            }
+        }
+
+        if($request->ajax()){
+            return view('ajax.order-by', [
+                'products' => $products
+            ])->render();
+        }
+
+        return view('category.index',[
+            'product_count' => $product_count,
             'products' => $products
         ]);
     }

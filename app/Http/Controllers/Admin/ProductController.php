@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Product;
+use App\Models\ProductImage;
+use App\Models\Characteristic;
 
 class ProductController extends Controller
 {
@@ -37,7 +40,7 @@ class ProductController extends Controller
             $filter[] = ["alias", "like", '%' . $request->alias . '%'];
         }
 
-        $categories = Category::where($filter)->orderBy('title')->limit(10)->get();
+        $categories = Category::where($filter)->orderBy('title')->limit(15)->get();
 
         if($request->ajax()){
             return response([
@@ -60,7 +63,47 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $new_product = new Product();
+        $new_product->title = $request->title;
+        $new_product->alias = $request->alias;
+        $new_product->price = $request->price;
+        $new_product->new_price = $request->new_price;
+        $new_product->description = $request->description;
+        
+        if($new_product->category_id){
+            $new_product->category_id = $request->category;
+        }
+
+        $new_product->save();
+
+        $images = json_decode($request->imgs ,true);
+
+        foreach($images as $key => $value){
+            $productImage = new ProductImage();
+
+            $productImagePath = $request->file('img-'.$value['id'])->store('uploads/products', 'public');
+            $productImage->img = $productImagePath;
+
+            $new_product->images()->save($productImage);
+        }
+
+        $chars = json_decode($request->chars ,true);
+
+        foreach($chars as $key => $value){
+            $productChar = new Characteristic();
+
+            $productChar->name = $value['name'];
+            $productChar->value = $value['value'];
+
+            $new_product->chars()->save($productChar);
+        }
+
+        return response([
+            'data' => [
+                'message' => 'Товар добавлен' 
+            ],
+            'action' => 'reset'
+        ], 201);
     }
 
     /**

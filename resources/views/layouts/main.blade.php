@@ -48,7 +48,7 @@
 											@endforeach
 										</ul>
 									</li>
-									<li><a href="#">Аксессуары</a></li>
+									<li><a href="{{ route('different') }}">Разное</a></li>
 									<li><a href="{{ route('contacts') }}">Контакты</a></li>
 								</ul>
 							</nav>
@@ -151,7 +151,7 @@
 							@endforeach
 						</ul>
 					</li>
-					<li class="page_menu_item menu_mm"><a href="index.html">Аксессуары<i class="fa fa-angle-down"></i></a></li>
+					<li class="page_menu_item menu_mm"><a href="{{ route('different') }}">Разное<i class="fa fa-angle-down"></i></a></li>
 					<li class="page_menu_item menu_mm"><a href="contact.html">Контакты<i class="fa fa-angle-down"></i></a></li>
 				</ul>
 			</div>

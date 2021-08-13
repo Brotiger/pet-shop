@@ -27,6 +27,7 @@ Route::middleware(['role:root'])->prefix('/admin_panel')->group(function () {
 });
 
 Route::get('/contacts', [ContactController::class, 'index'])->name('contacts');
+Route::get('/different', [ProductController::class, 'different'])->name('different');
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::get('/', [HomeController::class, 'index'])->name("home");
 Route::get('/{cat}', [ProductController::class, 'showCategory'])->name('showCategory');
