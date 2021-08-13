@@ -7,6 +7,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,7 @@ Route::middleware(['role:root'])->prefix('/admin_panel')->group(function () {
     Route::get(null, [AdminHomeController::class, 'index'])->name('adminHome');
 
     Route::resource('category', AdminCategoryController::class);
+    Route::resource('product', AdminProductController::class);
 });
 
 Route::get('/contacts', [ContactController::class, 'index'])->name('contacts');

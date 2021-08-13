@@ -40,16 +40,16 @@ class CategoryController extends Controller
             $next_query['alias'] = $request->alias;
         }
 
-        $categories = Category::where($filter)->orderBy('created_at', 'DESC')->paginate(5);
+        $categories = Category::where($filter)->orderBy('created_at', 'DESC')->paginate(15);
 
         if($request->ajax()){
             return response([
                 'data' => [
                     'html' => [
-                        'category' => view('admin.ajax.category.index', compact('categories', 'next_query'))->render(),
+                        'category' => view('admin.ajax.categoryList.index', compact('categories', 'next_query'))->render(),
                     ]
                 ]
-            ], 201);
+            ], 200);
         }
 
         return view('admin.category.index', compact('categories', 'next_query'));
@@ -179,15 +179,15 @@ class CategoryController extends Controller
             $next_query['alias'] = $request->alias;
         }
 
-        $categories = Category::where($filter)->orderBy('created_at', 'DESC')->paginate(5);
+        $categories = Category::where($filter)->orderBy('created_at', 'DESC')->paginate(15);
 
         return response([
             'data' => [
                 'message' => 'Категория удалена',
                 'html' => [
-                    'category' => view('admin.ajax.category.index', compact('categories', 'next_query'))->render(),
+                    'category' => view('admin.ajax.categoryList.index', compact('categories', 'next_query'))->render(),
                 ]
             ],
-        ], 201);
+        ], 200);
     }
 }

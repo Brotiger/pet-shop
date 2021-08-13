@@ -5,3 +5,7 @@ $('[btn-close]').click(function(){
 $('[btn-delete-img]').click(function(){
     $(this).parent().hide();
 });
+
+$('body').delegate('[delete-block]', 'click', function(){
+    $(this).parents('[block]').remove();
+});

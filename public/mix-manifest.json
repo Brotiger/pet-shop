@@ -3,5 +3,6 @@
     "/js/singl/forms.js": "/js/singl/forms.js",
     "/js/singl/deleteRecord.js": "/js/singl/deleteRecord.js",
     "/js/singl/searchRecord.js": "/js/singl/searchRecord.js",
+    "/js/singl/product.js": "/js/singl/product.js",
     "/css/app.css": "/css/app.css"
 }

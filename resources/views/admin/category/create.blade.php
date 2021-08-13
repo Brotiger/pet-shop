@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Добавить категорию')
+@section('title', 'Добавление категории')
 @section('content')
 <section class="content  pt-4">
     <div class="container-fluid">
@@ -44,7 +44,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Добавить</button>
+                  <button type="submit" class="btn btn-primary">Сохранить</button>
                 </div>
             </form>
         </div>

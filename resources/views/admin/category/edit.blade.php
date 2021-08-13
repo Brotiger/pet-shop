@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Добавить категорию')
+@section('title', 'Редактирование категории')
 @section('content')
 <section class="content  pt-4">
     <div class="container-fluid">
