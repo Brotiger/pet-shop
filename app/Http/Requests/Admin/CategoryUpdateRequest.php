@@ -27,7 +27,7 @@ class CategoryUpdateRequest extends FormRequest
         return [
             'title' => 'required|unique:categories,title,' . $this->category->id,
             'alias' => 'required|unique:categories,alias,'. $this->category->id,
-            'img' => 'image|size:'.env('MAX_LOGO_SIZE', 200),
+            'img' => 'image|max:'.env('MAX_LOGO_SIZE', 200),
             'description' => 'nullable|string',
             'deleteImg' => Rule::in(['true', 'false']),
         ];
@@ -41,7 +41,7 @@ class CategoryUpdateRequest extends FormRequest
             'alias.required' => 'Обязательное поле',
             'alias.unique' => 'Должен быть уникальным',
             'img.image' => 'Не является изображением',
-            'img.size' => 'Превышен максимальный вес изображения',
+            'img.max' => 'Превышен максимальный вес изображения',
             'description.string' => 'Текстовое поле'
         ];
     }

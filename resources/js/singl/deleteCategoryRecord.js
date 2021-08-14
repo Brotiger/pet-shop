@@ -8,11 +8,12 @@ $('body').delegate('[delete-id]', 'click', function(){
     $('#modal-warning').modal();
 });
 
-$('body').delegate('#btn-delete-record', 'click', function(){
+$('#deleteForm').submit(function(){
     $('#modal-warning').modal('hide');
     $.ajax({
         type: 'DELETE',
         url: delete_url,
+        data: $(this).serialize(),
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -20,7 +21,7 @@ $('body').delegate('#btn-delete-record', 'click', function(){
             if(data.data.message){
                 toastr.success(data.data.message);
             }
-            $('#category').html(data.data.html.category);
+            delete_record.parents('tr').remove();
         },
         error: function(){
             if(data.responseJSON.message){
@@ -28,4 +29,6 @@ $('body').delegate('#btn-delete-record', 'click', function(){
             }
         }
     });
+
+    return false;
 });

@@ -20,9 +20,50 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $filter = [];
+        $next_query = [
+            'id' => '',
+            'alias' => '',
+            'title' => '',
+            'category' => '',
+            'price' => '',
+            'new_price' => '',
+            'is_stoke'
+        ];
+
+        if($request->id != null){
+            $filter[] = ["id", "=", $request->id];
+            $next_query['id'] = $request->id;
+        }
+        if($request->title != null){
+            $filter[] = ["title", "like", '%' . $request->title . '%'];
+            $next_query['title'] = $request->title;
+        }
+        if($request->alias != null){
+            $filter[] = ["alias", "like", '%' . $request->alias . '%'];
+            $next_query['alias'] = $request->alias;
+        }
+        if($request->category != null){
+            $category = Category::where('alias', $request->category)->first();
+            $filter[] = ["category_id", "=", $category->id];
+            $next_query['category'] = $request->category;
+        }
+
+        $products = Product::where($filter)->orderBy('created_at', 'DESC')->paginate(15);
+
+        if($request->ajax()){
+            return response([
+                'data' => [
+                    'html' => [
+                        'table' => view('admin.ajax.product.index', compact('products', 'next_query'))->render(),
+                    ]
+                ]
+            ], 200);
+        }
+
+        return view('admin.product.index', compact('products', 'next_query'));
     }
 
     /**
@@ -80,6 +121,7 @@ class ProductController extends Controller
             $new_product->new_price = $request->new_price;
             $new_product->description = $request->description;
             $new_product->category_id = $request->category;
+            $new_product->is_stoke = $request->is_stoke == 'true'? 1 : 0;
 
             $new_product->save();
 
@@ -130,10 +172,10 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Product $product)
     {
         //
     }
@@ -141,10 +183,10 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
         //
     }
@@ -153,10 +195,10 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
         //
     }
@@ -164,11 +206,21 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        foreach($product->images as $key => $image){
+            Storage::disk('public')->delete($image->img);
+        }
+
+        $product->delete();
+
+        return response([
+            'data' => [
+                'message' => 'Товар удален',
+            ],
+        ], 200);
     }
 }

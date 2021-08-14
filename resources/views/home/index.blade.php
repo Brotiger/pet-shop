@@ -104,7 +104,7 @@
 					</div>
 					<div class="avds_small_content">
 						<div class="avds_title">На все смартфоны</div>
-						<div class="avds_link"><a href="{{ route('showCategory', $categories[0]->alias) }}">Подробнее</a></div>
+						<div class="avds_link"><a href="#">Подробнее</a></div>
 					</div>
 				</div>
 			</div>
@@ -114,7 +114,7 @@
 					<div class="avds_large_content">
 						<div class="avds_title">Профессиональные фотоаппараты</div>
 						<div class="avds_text">Качественные профессиональные фотоаппараты по приемлемым ценам</div>
-						<div class="avds_link avds_link_large"><a href="{{ route('showCategory', $categories[1]->alias) }}">Подробнее</a></div>
+						<div class="avds_link avds_link_large"><a href="#">Подробнее</a></div>
 					</div>
 				</div>
 			</div>
@@ -144,9 +144,11 @@
                         <!-- Product -->
 						<div class="product">
 							<div class="product_image"><img src="/images/{{ $image }}" alt="{{ $product->title }}"></div>
-							<div class="product_extra product_new"><a href="{{ route('showCategory', $product->category->alias) }}">{{ $product->category->title }}</a></div>
+							@if(!empty($product->category))
+								<div class="product_extra product_new"><a href="{{ route('showCategory', $product->category->alias) }}">{{ $product->category->title }}</a></div>
+							@endif
 							<div class="product_content">
-								<div class="product_title"><a href="{{ route('showProduct', [$product->category->alias, $product->alias]) }}">{{ $product->title }}</a></div>
+								<div class="product_title"><a href="{{ route('showProduct', [$product->category->alias ?? 'different', $product->alias]) }}">{{ $product->title }}</a></div>
 								@if($product->new_price != null)
 									<div style="text-decoration: line-through;">{{ $product->price }} р.</div>
 									<div class="product_price">{{ $product->new_price }} р.</div>
@@ -174,7 +176,7 @@
 						<div class="avds_xl_content">
 							<div class="avds_title">Необычные гаджеты</div>
 							<div class="avds_text">Необычных флешки, музыкальные колоноки, внешнии аккумуляторы и.т.п.</div>
-							<div class="avds_link avds_xl_link"><a href="{{ route('showCategory', $categories[2]->alias) }}">Подробнее</a></div>
+							<div class="avds_link avds_xl_link"><a href="#">Подробнее</a></div>
 						</div>
 					</div>
 				</div>

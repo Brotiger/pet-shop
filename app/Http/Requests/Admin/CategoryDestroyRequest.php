@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CategoryDestroyRequest extends FormRequest
 {
@@ -24,9 +25,7 @@ class CategoryDestroyRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'integer|nullable',
-            'alias' => 'string|nullable',
-            'title' => 'string|nullable',
+            'delete_type' => Rule::in('all', 'singl')
         ];
     }
 }

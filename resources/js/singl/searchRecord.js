@@ -17,7 +17,7 @@ $('#searchForm').submit(function(){
         },
         success: function(data){
             $("[error-message]").hide();
-            $('#category').html(data.data.html.category);
+            $('#table').html(data.data.html.table);
         },
         error: function(data){
             if(data.responseJSON.message){
@@ -38,7 +38,7 @@ $('body').delegate('#btn-modal-reset', 'click', function(){
         },
         success: function(data){
             $("[error-message]").hide();
-            $('#category').html(data.data.html.category);
+            $('#table').html(data.data.html.table);
         },
         error: function(data){
             if(data.responseJSON.message){

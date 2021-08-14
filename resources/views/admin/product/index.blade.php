@@ -1,16 +1,16 @@
 @extends('layouts.admin')
 
-@section('title', 'Все категории')
+@section('title', 'Все товары')
 @section('content')
-@include('admin.components.warnings.deleteCategoryWarning')
+@include('admin.components.warnings.deleteProductWarning')
 @include('admin.components.modals.categoryList.searchCategory')
 <section class="content pt-4">
     <div class="container-fluid" id="table">
     <div class="card">
         <div class="card-header">
-          <h3 class="card-title mb-0">Все категории</h3>
+          <h3 class="card-title mb-0">Все товары</h3>
           <div class="card-tools">
-            <button type="button" class="btn btn-tool" id="btn-modal-reset" method="GET" action="{{ route('category.index') }}">
+            <button type="button" class="btn btn-tool" id="btn-modal-reset" method="GET" action="{{ route('product.index') }}">
               <i class="fas fa-redo-alt"></i>
             </button>
             <button type="button" class="btn btn-tool" id="btn-modal-search">
@@ -29,40 +29,57 @@
                           Название
                       </th>
                       <th>
+                        Категория
+                      </th>
+                      <th>
                         Псевдоним
+                      </th>
+                      <th>
+                        Наличие
+                      </th>
+                      <th>
+                        Цена
+                      </th>
+                      <th>
+                        Новая цена
                       </th>
                   </tr>
               </thead>
               <tbody>
-                  @foreach($categories as $category)
+                  @foreach($products as $product)
                   <tr>
                       <td>
-                        {{ $category->id }}
+                        {{ $product->id }}
                       </td>
                       <td>
-                        {{ $category->title }}
+                        {{ $product->title }}
                       </td>
                       <td>
-                        {{ $category->alias }}
+                        {{ !empty($product->category)? $product->category->title : 'Разное' }}
+                      </td>
+                      <td>
+                        {{ $product->alias }}
+                      </td>
+                      <td>
+                        {{ $product->is_stoke == 1? 'Есть в наличие' : 'Под заказ' }}
+                      </td>
+                      <td>
+                        {{ $product->price }} р.
+                      </td>
+                      <td>
+                        {{ $product->new_price? $product->new_price . ' р.' : ''}}
                       </td>
                       <td class="project-actions text-right">
-                          <a class="btn btn-primary btn-sm" href="{{ route('product.index', ['category' => $category['alias']]) }}">
-                              <i class="fas fa-folder">
-                              </i>
-                              Просмотр
-                          </a>
-                          <a class="btn btn-info btn-sm" href="{{ route('category.edit', $category['id']) }}">
+                          <a class="btn btn-info btn-sm" href="{{ route('product.edit', $product['id']) }}">
                               <i class="fas fa-pencil-alt">
                               </i>
                               Редактировать
                           </a>
-                          <!--<form action="{{ route('category.destroy', $category['id']) }}" method="POST" class="d-inline" deleteForm>-->
-                            <button class="btn btn-danger btn-sm delete-btn" type="button" delete-id="{{ $category->id }}" action="{{ route('category.destroy', $category['id']) }}">
+                            <button class="btn btn-danger btn-sm delete-btn" type="button" delete-id="{{ $product->id }}" action="{{ route('product.destroy', $product['id']) }}">
                                 <i class="fas fa-trash">
                                 </i>
                                 Удалить
                             </button>
-                          <!--</form>-->
                       </td>
                   </tr>
                   @endforeach
@@ -72,14 +89,14 @@
         <!-- /.card-body -->
       </div>
       <div>
-        {{ $categories->appends($next_query)->links('pagination.admin.bootstrap-4-v2') }}
+        {{ $products->appends($next_query)->links('pagination.admin.bootstrap-4-v2') }}
       </div>
     </div>
 </section>    
   <!-- /.content-header -->
 @endsection
 @section('custom_js')
-<script src="/js/singl/deleteCategoryRecord.js"></script>
+<script src="/js/singl/deleteProductRecord.js"></script>
 <script src="/js/singl/forms.js"></script>
 <script src="/js/singl/searchRecord.js"></script>
 @endsection

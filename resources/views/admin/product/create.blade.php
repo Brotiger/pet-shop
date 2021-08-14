@@ -67,6 +67,15 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="exampleInputPassword1">Наличие</label>
+                        <div>
+                            <span class="d-flex align-items-center"><input type="radio" name="is_stoke" id="is_stoke_true" value="true"><label class="ml-1 mb-0 font-weight-normal" for="is_stoke_true">Есть в наличие</label></span>
+                        </div>
+                        <div>
+                            <span class="d-flex align-items-center"><input type="radio" name="is_stoke" checked id="is_stoke_false" value="false"><label class="ml-1 mb-0 font-weight-normal" for="is_stoke_false">Под заказ</label></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="form-group">
                             <div class="d-flex justify-content-between form-group">
                                 <label for="inputFile">Характеристики</label>

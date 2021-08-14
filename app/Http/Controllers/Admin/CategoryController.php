@@ -46,7 +46,7 @@ class CategoryController extends Controller
             return response([
                 'data' => [
                     'html' => [
-                        'category' => view('admin.ajax.categoryList.index', compact('categories', 'next_query'))->render(),
+                        'table' => view('admin.ajax.category.index', compact('categories', 'next_query'))->render(),
                     ]
                 ]
             ], 200);
@@ -156,37 +156,22 @@ class CategoryController extends Controller
      */
     public function destroy(CategoryDestroyRequest $request, Category $category)
     {
-        $filter = [];
+        if($request->delete_type == 'all'){
+            foreach($category->products as $key => $product){
+                foreach($product->images as $key => $image){
+                    Storage::disk('public')->delete($image->img);
+                }
+            }
 
-        $next_query = [
-            'id' => '',
-            'alias' => '',
-            'title' => '',
-        ];
+            $category->products()->delete();
+        }
 
+        Storage::disk('public')->delete($category->img);
         $category->delete();
-        
-        if($request->id != null){
-            $filter[] = ["id", "=", $request->id];
-            $next_query['id'] = $request->id;
-        }
-        if($request->title != null){
-            $filter[] = ["title", "like", '%' . $request->title . '%'];
-            $next_query['title'] = $request->title;
-        }
-        if($request->alias != null){
-            $filter[] = ["alias", "like", '%' . $request->alias . '%'];
-            $next_query['alias'] = $request->alias;
-        }
-
-        $categories = Category::where($filter)->orderBy('created_at', 'DESC')->paginate(15);
 
         return response([
             'data' => [
                 'message' => 'Категория удалена',
-                'html' => [
-                    'category' => view('admin.ajax.categoryList.index', compact('categories', 'next_query'))->render(),
-                ]
             ],
         ], 200);
     }

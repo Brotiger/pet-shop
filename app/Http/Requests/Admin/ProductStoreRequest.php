@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ProductStoreRequest extends FormRequest
 {
@@ -27,12 +28,13 @@ class ProductStoreRequest extends FormRequest
             'title' => 'required|unique:products,title',
             'alias' => 'required|unique:products,alias',
             'price' => 'required|integer',
-            'new_price' => 'integer|nullable|lt:price',
+            'new_price' => 'nullable|integer|lt:price',
             'description' => 'nullable|string',
             'category' => 'nullable|exists:categories,id',
-            'img.*' => 'required|image|size:'.env('MAX_IMG_SIZE', 100),
+            'img.*' => 'required|image|max:'.env('MAX_IMG_SIZE', 100),
             'charName.*' => 'required|string',
             'charValue.*' => 'required|string',
+            'is_stoke' => Rule::in(['true', 'false']),
         ];
     }
 
@@ -44,7 +46,7 @@ class ProductStoreRequest extends FormRequest
             'alias.required' => 'Обязательное поле',
             'alias.unique' => 'Должен быть уникальным',
             'img.*.required' => 'Обязательное поле',
-            'img.*.size' => 'Превышен максимальный вес изображения',
+            'img.*.max' => 'Превышен максимальный вес изображения',
             'img.*.image' => 'Не является изображением',
             'description.string' => 'Текстовое поле',
             'price.required' => 'Обязательное поле',

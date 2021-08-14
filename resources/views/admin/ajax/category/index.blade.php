@@ -38,7 +38,7 @@
                         {{ $category->alias }}
                       </td>
                       <td class="project-actions text-right">
-                          <a class="btn btn-primary btn-sm" href="#">
+                          <a class="btn btn-primary btn-sm" href="{{ route('product.index', ['category' => $category['alias']]) }}">
                               <i class="fas fa-folder">
                               </i>
                               Просмотр
