@@ -36,10 +36,9 @@
                         <span class="text-danger" id="error-new_price" style="display: none"></span>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Категория</label>
-                        <div class="mb-2">
-                            <small>В списке предоставлены первые {{ $limit }} совпадений</small>
-                        </div>
+                        <label for="exampleInputPassword1">Категория
+                            <small class="ml-1">(в списке предоставлены первые {{ $limit }} совпадений)</small>
+                        </label>
                         <div class="input-group">
                             <select class="form-control" placeholder="Категория" id="category" name="category">
                                 <option value=''>Нету</option>

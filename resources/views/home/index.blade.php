@@ -143,7 +143,7 @@
 							@endphp
                         <!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="/images/{{ $image }}" alt=""></div>
+							<div class="product_image"><img src="/images/{{ $image }}" alt="{{ $product->title }}"></div>
 							<div class="product_extra product_new"><a href="{{ route('showCategory', $product->category->alias) }}">{{ $product->category->title }}</a></div>
 							<div class="product_content">
 								<div class="product_title"><a href="{{ route('showProduct', [$product->category->alias, $product->alias]) }}">{{ $product->title }}</a></div>

@@ -22,8 +22,8 @@
 					<div class="row">
 						<div class="col">
 							<div class="home_content">
-								<div class="home_title">{{ $cat->title ?? 'Разное' }}<span>.</span></div>
-								<div class="home_text"><p>{{ $cat->description ?? 'В данном разделе представленны товары без категории' }}</p></div>
+								<div class="home_title">{{ !empty($cat)? $cat->title : 'Разное' }}<span>.</span></div>
+								<div class="home_text"><p>{{ !empty($cat)? $cat->description : 'В данном разделе представленны товары без категории' }}</p></div>
 							</div>
 						</div>
 					</div>
@@ -78,7 +78,7 @@
 							@endphp
                         <!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="{{ $image }}" alt=""></div>
+							<div class="product_image"><img src="{{ $image }}" alt="{{ $product->title }}"></div>
 							@if(!empty($cat))
 								<div class="product_extra product_new"><a href="{{ route('showCategory', $product->category->alias) }}">{{ $product->category->title }}</a></div>
 							@endif

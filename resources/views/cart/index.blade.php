@@ -76,7 +76,7 @@
 							</div>
 						</div>
 						<!-- Total -->
-						<div class="cart_item_total" item_total_id='{{ $product->id }}'>{{ $product->price *  $product->quantity }} р.</div>
+						<div class="cart_item_total"><span item_total_id='{{ $product->id }}'>{{ $product->price *  $product->quantity }}</span> <span>р.</span></div>
 					</div>
 					@endforeach
 				</div>
