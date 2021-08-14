@@ -26,6 +26,7 @@ class CategoryStoreRequest extends FormRequest
         return [
             'title' => 'required|unique:categories,title',
             'alias' => 'required|unique:categories,alias',
+            'description' => 'nullable|string',
             'img' => 'image',
         ];
     }
@@ -33,11 +34,12 @@ class CategoryStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'title.required' => 'Название - обязательное поле',
-            'title.unique' => 'Название - должно быть уникальным',
-            'alias.required' => 'Псевдоним - обязательное поле',
-            'alias.unique' => 'Псевдоним - должен быть уникальным',
-            'img.image' => 'Вы пытаетесь загрузить файл не являющийся изображением',
+            'title.required' => 'Обязательное поле',
+            'title.unique' => 'Должно быть уникальным',
+            'alias.required' => 'Обязательное поле',
+            'alias.unique' => 'Должен быть уникальным',
+            'img.image' => 'Не является изображением',
+            'description.string' => 'Текстовое поле'
         ];
     }
 }

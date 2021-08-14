@@ -8,6 +8,9 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\Characteristic;
+use App\Http\Requests\Admin\ProductStoreRequest;
+use App\Http\Requests\Admin\ProductCreateRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -26,7 +29,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(ProductCreateRequest $request)
     {
         $filter = [];
 
@@ -61,7 +64,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
         $new_product = new Product();
         $new_product->title = $request->title;
@@ -76,26 +79,26 @@ class ProductController extends Controller
 
         $new_product->save();
 
-        $images = json_decode($request->imgs ,true);
+        if($request->img){
+            foreach($request->img as $key => $value){
+                $productImage = new ProductImage();
 
-        foreach($images as $key => $value){
-            $productImage = new ProductImage();
+                $productImagePath = Storage::disk('public')->put('uploads/products', $value);
+                $productImage->img = $productImagePath;
 
-            $productImagePath = $request->file('img-'.$value['id'])->store('uploads/products', 'public');
-            $productImage->img = $productImagePath;
-
-            $new_product->images()->save($productImage);
+                $new_product->images()->save($productImage);
+            }
         }
 
-        $chars = json_decode($request->chars ,true);
+        if($request->charName){
+            foreach($request->charName as $key => $value){
+                $productChar = new Characteristic();
 
-        foreach($chars as $key => $value){
-            $productChar = new Characteristic();
+                $productChar->name = $value;
+                $productChar->value = $request->charValue[$key];
 
-            $productChar->name = $value['name'];
-            $productChar->value = $value['value'];
-
-            $new_product->chars()->save($productChar);
+                $new_product->chars()->save($productChar);
+            }
         }
 
         return response([

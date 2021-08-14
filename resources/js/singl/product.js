@@ -1,9 +1,6 @@
-var imgCount = 0;
-var charCount = 0;
-
 $("#addPhoto").on("click", function(){
     $("#photoList").append(
-        `<div class="form-group" block imgBlock id="imgBlock-${imgCount}">`
+        `<div class="form-group" block imgBlock>`
             + `<div class="input-group">`
                 + `<div class="input-group-prepend">`
                         + `<button type="button" class="btn btn-danger" delete-block>`
@@ -11,64 +8,37 @@ $("#addPhoto").on("click", function(){
                         + `</button>`
                 + `</div>`
                 + `<div class="custom-file">`
-                        + `<input type="file" name="img-${imgCount}" class="custom-file-input" id="inputFile-${imgCount}">`
-                        + `<label class="custom-file-label" for="inputFile-${imgCount}">Выбирете файл</label>`
+                        + `<input type="file" name="img[]" class="custom-file-input" required>`
+                        + `<label class="custom-file-label">Выбирете файл</label>`
                 + `</div>`
             + `</div>`
-            + `<span class="text-danger" error-message id="error-img-${imgCount}" style="display: none"></span>`
+            + `<span class="text-danger" error-message style="display: none" img-error></span>`
         + `</div>`);
-        imgCount++;
         bsCustomFileInput.init();
     });
 
 $("#addChar").on("click", function(){
     $("#charList").append(
-        `<div class="form-group" block charBlock id="charBlock-${charCount}">`
+        `<div class="form-group" block charBlock>`
             + `<div class="input-group">`
                 + `<div class="input-group-prepend">`
                     + `<button type="button" class="btn btn-danger" delete-block>`
                         + `<i class="fas fa-trash"></i>`
                     + `</button>`
                 + `</div>`
-                + `<input type="text" name="char-key-${charCount}" class="form-control" placeholder="Название" key>`
-                + `<input type="text" name="char-value-${charCount}" class="form-control" placeholder="Значение" val>`
+                + `<input type="text" name="charName[]" class="form-control" placeholder="Название" required>`
+                + `<input type="text" name="charValue[]" class="form-control" placeholder="Значение" required>`
             + `</div>`
-            + `<span class="text-danger" error-message id="error-char-${charCount}" style="display: none"></span>`
+            + `<div class="text-danger" error-message style="display: none" char-name-error></div>`
+            + `<div class="text-danger" error-message style="display: none" char-value-error></div>`
         + `</div>`);
-        charCount++;
         bsCustomFileInput.init();
     });
 
 $('#addForm, #editForm').submit(function(){
     var form = $(this);
-    let formData = new FormData();
+    var formData = new FormData(form[0]);
 
-    var img = [];
-    var char = [];
-
-    //Начадл добавления данных о фото
-    $("[imgBlock]").each(function(i, ell){
-        img.push({
-            "id": ell.id.replace("imgBlock-", "")
-        });
-        formData.append("img-" + ell.id.replace("imgBlock-", ""), $(this).find("[type='file']")[0].files[0]);
-    });
-    formData.append("imgs", JSON.stringify(img));
-
-    //Начадл добавления данных о характеристиках
-    $("[charBlock]").each(function(i, ell){
-        char.push({
-            "name": $(this).find("[key]").val(),
-            "value": $(this).find("[val]").val(),
-            "id": ell.id.replace("charBlock-", "")
-        });
-    });
-    formData.append("chars", JSON.stringify(char));
-
-    $('[data-field]').each(function(i, ell){
-        formData.append(ell.name, $(this).val());
-    });
-    
     $.ajax({
         type: $(this).attr('method'),
         url: $(this).attr('action'),
@@ -85,7 +55,6 @@ $('#addForm, #editForm').submit(function(){
                 form[0].reset();
                 resetForm();
             }
-
             if(data.data.message){
                 toastr.success(data.data.message);
             }
@@ -94,10 +63,20 @@ $('#addForm, #editForm').submit(function(){
             $('[error-message]').attr('error-message', 'false');
             let response = data.responseJSON;
             for(key in response.errors){
-                $(`#error-${key}`).show().text(response.errors[key]);
-                $(`#error-${key}`).attr('error-message', 'true');
+                let charValue = key.match(/charValue\.([0-9]+)/);
+                let charName = key.match(/charName\.([0-9]+)/);
+                let img = key.match(/img\.([0-9]+)/);
+                if(charValue){
+                    $(`[char-value-error]`).eq([charValue[1]]).show().text(response.errors[key]).attr('error-message', 'true');
+                }if(charName){
+                    $(`[char-name-error]`).eq([charName[1]]).show().text(response.errors[key]).attr('error-message', 'true');
+                }if(img){
+                    $(`[img-error]`).eq([img[1]]).show().text(response.errors[key]).attr('error-message', 'true');
+                }else{
+                    $(`#error-${key}`).show().text(response.errors[key]).attr('error-message', 'true');
+                }
             };
-    
+
             $("[error-message=false]").hide();
             if(data.responseJSON.message){
                 toastr.error(data.responseJSON.message);
@@ -115,9 +94,6 @@ function resetForm(){
     });
     $("[imgBlock]").remove();
     $("[charBlock]").remove();
-
-    imgCount = 0;
-    charCount = 0;
 }
 
 $('body').delegate('#btn-modal-search', 'click', function(){

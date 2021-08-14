@@ -16,12 +16,12 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Название*</label>
-                        <input type="text" name="title" class="form-control" placeholder="Введите название товара" required data-field>
+                        <input type="text" name="title" class="form-control" placeholder="Введите название товара" required>
                         <span class="text-danger" error-message id="error-title" style="display: none"></span>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Псевдоним*</label>
-                        <input type="text" name="alias" class="form-control" placeholder="Введите псевдоним, который будет использоваться в url" required data-field>
+                        <input type="text" name="alias" class="form-control" placeholder="Введите псевдоним, который будет использоваться в url" required>
                         <span class="text-danger" id="error-alias" style="display: none"></span>
                     </div>
                     <div class="form-group">
@@ -30,10 +30,11 @@
                             <small>Цена должна быть указана в рублях</small>
                         </div>
                         <div class="input-group">
-                            <input type="number" name="price" class="form-control" placeholder="Введите цену товара" required data-field>
-                            <input type="number" name="new_price" class="form-control" placeholder="Введите новую цену товара" data-field>
+                            <input type="number" name="price" class="form-control" placeholder="Введите цену товара" required>
+                            <input type="number" name="new_price" class="form-control" placeholder="Введите новую цену товара">
                         </div>
                         <span class="text-danger" id="error-price" style="display: none"></span>
+                        <span class="text-danger" id="error-new_price" style="display: none"></span>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Категория</label>
@@ -41,7 +42,7 @@
                             <small>В списке предоставлены первые 15 совпадений</small>
                         </div>
                         <div class="input-group">
-                            <select class="form-control" placeholder="Категория" required id="category" name="category" data-field>
+                            <select class="form-control" placeholder="Категория" required id="category" name="category">
                                 <option value="null">Нету</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->title }}</option>
@@ -58,12 +59,12 @@
                                 </button>
                             </div>
                         </div>
-                        <span class="text-danger" id="error-alias" style="display: none"></span>
+                        <span class="text-danger" id="error-category" style="display: none"></span>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Описание</label>
                         <div>
-                            <textarea class="form-control" name="description" placeholder="Введите описание товара" data-field></textarea>
+                            <textarea class="form-control" name="description" placeholder="Введите описание товара"></textarea>
                             <span class="text-danger" error-message id="error-description" style="display: none"></span>
                         </div>
                     </div>
