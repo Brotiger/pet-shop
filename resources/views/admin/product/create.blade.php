@@ -8,7 +8,7 @@
         <div style="max-width: 600px">
         <div class="card card-primary">
             <div class="card-header">
-                Добавление товара
+                <h3 class="card-title mb-0">Добавление товара</h3>
             </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -25,10 +25,9 @@
                         <span class="text-danger" id="error-alias" style="display: none"></span>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Цена*</label>
-                        <div class="mb-2">
-                            <small>Цена должна быть указана в рублях</small>
-                        </div>
+                        <label for="exampleInputPassword1">Цена*
+                            <small class="ml-1">(в рублях)</small>  
+                        </label>
                         <div class="input-group">
                             <input type="number" name="price" class="form-control" placeholder="Введите цену товара" required>
                             <input type="number" name="new_price" class="form-control" placeholder="Введите новую цену товара">
@@ -39,11 +38,11 @@
                     <div class="form-group">
                         <label for="exampleInputPassword1">Категория</label>
                         <div class="mb-2">
-                            <small>В списке предоставлены первые 15 совпадений</small>
+                            <small>В списке предоставлены первые {{ $limit }} совпадений</small>
                         </div>
                         <div class="input-group">
-                            <select class="form-control" placeholder="Категория" required id="category" name="category">
-                                <option value="null">Нету</option>
+                            <select class="form-control" placeholder="Категория" id="category" name="category">
+                                <option value=''>Нету</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->title }}</option>
                                 @endforeach
@@ -81,7 +80,9 @@
                     <div class="form-group">
                         <div class="form-group">
                             <div class="d-flex justify-content-between form-group">
-                                <label for="inputFile">Фотографии</label>
+                                <label for="inputFile">Фотографии
+                                    <small class="ml-1">(максимальный вес: {{ env('MAX_IMG_SIZE', 100) }} КБ)</small>
+                                </label>
                                 <button type="button" class="btn btn-primary" id="addPhoto"><i class="fas fa-plus"></i></button>
                             </div>
                             <div id="photoList">

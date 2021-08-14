@@ -11,6 +11,7 @@ use App\Models\Characteristic;
 use App\Http\Requests\Admin\ProductStoreRequest;
 use App\Http\Requests\Admin\ProductCreateRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -43,7 +44,8 @@ class ProductController extends Controller
             $filter[] = ["alias", "like", '%' . $request->alias . '%'];
         }
 
-        $categories = Category::where($filter)->orderBy('title')->limit(15)->get();
+        $limit = env('LIMIT_SEARCH_RECORD', 15);
+        $categories = Category::where($filter)->orderBy('title')->limit($limit)->get();
 
         if($request->ajax()){
             return response([
@@ -55,7 +57,7 @@ class ProductController extends Controller
             ], 200);
         }
 
-        return view('admin.product.create',compact('categories'));
+        return view('admin.product.create',compact('categories', 'limit'));
     }
 
     /**
@@ -66,39 +68,55 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request)
     {
-        $new_product = new Product();
-        $new_product->title = $request->title;
-        $new_product->alias = $request->alias;
-        $new_product->price = $request->price;
-        $new_product->new_price = $request->new_price;
-        $new_product->description = $request->description;
-        
-        if($new_product->category_id){
+        DB::beginTransaction();
+
+        try {
+            $product_images_arr = [];
+
+            $new_product = new Product();
+            $new_product->title = $request->title;
+            $new_product->alias = $request->alias;
+            $new_product->price = $request->price;
+            $new_product->new_price = $request->new_price;
+            $new_product->description = $request->description;
             $new_product->category_id = $request->category;
-        }
 
-        $new_product->save();
+            $new_product->save();
 
-        if($request->img){
-            foreach($request->img as $key => $value){
-                $productImage = new ProductImage();
+            if($request->img){
+                foreach($request->img as $key => $value){
+                    $productImage = new ProductImage();
 
-                $productImagePath = Storage::disk('public')->put('uploads/products', $value);
-                $productImage->img = $productImagePath;
+                    $productImagePath = Storage::disk('public')->put('uploads/products', $value);
+                    $product_images_arr[] = $productImagePath;
 
-                $new_product->images()->save($productImage);
+                    $productImage->img = $productImagePath;
+
+                    $new_product->images()->save($productImage);
+                }
             }
-        }
 
-        if($request->charName){
-            foreach($request->charName as $key => $value){
-                $productChar = new Characteristic();
+            if($request->charName){
+                foreach($request->charName as $key => $value){
+                    $productChar = new Characteristic();
 
-                $productChar->name = $value;
-                $productChar->value = $request->charValue[$key];
+                    $productChar->name = $value;
+                    $productChar->value = $request->charValue[$key];
 
-                $new_product->chars()->save($productChar);
+                    $new_product->chars()->save($productChar);
+                }
             }
+
+            DB::commit();
+
+        } catch (\Throwable $e) {
+            DB::rollback();
+
+            foreach($product_images_arr as $key => $value){
+                Storage::disk('public')->delete($value);
+            }
+
+            throw $e;
         }
 
         return response([

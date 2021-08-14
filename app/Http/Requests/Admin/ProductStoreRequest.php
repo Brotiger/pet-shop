@@ -29,8 +29,8 @@ class ProductStoreRequest extends FormRequest
             'price' => 'required|integer',
             'new_price' => 'integer|nullable|lt:price',
             'description' => 'nullable|string',
-            'category_id' => 'nullable|exists:categories,id',
-            'img.*' => 'required|image',
+            'category' => 'nullable|exists:categories,id',
+            'img.*' => 'required|image|size:'.env('MAX_IMG_SIZE', 100),
             'charName.*' => 'required|string',
             'charValue.*' => 'required|string',
         ];
@@ -44,6 +44,7 @@ class ProductStoreRequest extends FormRequest
             'alias.required' => 'Обязательное поле',
             'alias.unique' => 'Должен быть уникальным',
             'img.*.required' => 'Обязательное поле',
+            'img.*.size' => 'Превышен максимальный вес изображения',
             'img.*.image' => 'Не является изображением',
             'description.string' => 'Текстовое поле',
             'price.required' => 'Обязательное поле',

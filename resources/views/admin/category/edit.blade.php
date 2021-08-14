@@ -7,7 +7,7 @@
         <div style="max-width: 600px">
         <div class="card card-primary">
             <div class="card-header">
-                Редактирование категории: {{ $category->title }}
+                <h3 class="card-title mb-0">Редактирование категории</h3>
             </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -33,7 +33,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputFile">Новая фотография</label>
+                        <label for="inputFile">Новая фотография
+                            <small class="ml-1">(максимальный вес: {{ env('MAX_LOGO_SIZE', 200) }} КБ)</small>
+                        </label>
                         <div class="input-group">
                             <div class="custom-file">
                                 <input type="file" name="img" class="custom-file-input" id="inputFile">

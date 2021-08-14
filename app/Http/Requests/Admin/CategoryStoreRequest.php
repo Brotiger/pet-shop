@@ -27,7 +27,7 @@ class CategoryStoreRequest extends FormRequest
             'title' => 'required|unique:categories,title',
             'alias' => 'required|unique:categories,alias',
             'description' => 'nullable|string',
-            'img' => 'image',
+            'img' => 'image|size:'.env('MAX_LOGO_SIZE', 200),
         ];
     }
 
@@ -39,6 +39,7 @@ class CategoryStoreRequest extends FormRequest
             'alias.required' => 'Обязательное поле',
             'alias.unique' => 'Должен быть уникальным',
             'img.image' => 'Не является изображением',
+            'img.size' => 'Превышен максимальный вес изображения',
             'description.string' => 'Текстовое поле'
         ];
     }

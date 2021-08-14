@@ -41,7 +41,7 @@ class CartController extends Controller
             'attributes' => array(
                 'img' => isset($product->images[0]->img) ? $product->images[0]->img : 'no_image.png',
                 'alias' => $product->alias,
-                'category' => $product->category->alias
+                'category' => !empty($product->category)? $product->category->alias : 'different'
             )
         ));
 
