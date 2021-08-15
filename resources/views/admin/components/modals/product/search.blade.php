@@ -42,7 +42,8 @@
                     </select>
                     <input type="number" name="new_price" class="form-control" placeholder="Введите новую цену товара">
                 </div>
-                <div class="input-group mt-2">
+                <div class="form-group mt-2">
+                    <label>Наличие</label>
                     <select name="is_stoke" class="form-control">
                         <option value="">По умолчанию</option>
                         <option value="true">Есть в наличии</option>

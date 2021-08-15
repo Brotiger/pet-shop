@@ -13,6 +13,7 @@ use App\Http\Requests\Admin\Product\ProductCreateRequest;
 use App\Http\Requests\Admin\Product\ProductIndexRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -76,7 +77,7 @@ class ProductController extends Controller
         }
 
         if($request->category_like != null){
-            if(strtolower($request->category_like) == 'разное'){
+            if(Str::lower($request->category_like) == 'разное'){
                 $filter[] = ['category_id', '=', null];
 
                 $products = Product::where($filter)->orderBy('created_at', 'DESC')->paginate(15);

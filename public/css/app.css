@@ -10020,13 +10020,19 @@ h3 {
   color: #761b18;
 }
 
-table {
+table.list {
   table-layout: fixed;
 }
-table th {
+table.list th {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+table.list td:first-of-type {
+  white-space: nowrap;
+}
+table.list tr td {
+  vertical-align: middle;
 }
 
 .card-header {

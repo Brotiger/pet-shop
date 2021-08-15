@@ -22,12 +22,18 @@
     }
 }
 
-table{
+table.list{
     table-layout: fixed;
     th{
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+    td:first-of-type{
+        white-space: nowrap;
+    }
+    tr td{
+        vertical-align: middle;
     }
 }
 
