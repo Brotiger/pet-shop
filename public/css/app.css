@@ -10023,7 +10023,7 @@ h3 {
 table {
   table-layout: fixed;
 }
-table td, table th {
+table th {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

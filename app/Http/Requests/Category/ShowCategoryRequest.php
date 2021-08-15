@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CartDeleteItemRequest extends FormRequest
+class ShowCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class CartDeleteItemRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|integer|exists:products,id'
+            'orderBy' => 'in:price-low-high,price-high-low,name-a-z,name-z-a,default'
         ];
     }
 }

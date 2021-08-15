@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class CategoryUpdateRequest extends FormRequest
 {
@@ -29,7 +28,7 @@ class CategoryUpdateRequest extends FormRequest
             'alias' => 'required|unique:categories,alias,'. $this->category->id,
             'img' => 'image|max:'.env('MAX_LOGO_SIZE', 200),
             'description' => 'nullable|string',
-            'deleteImg' => Rule::in(['true', 'false']),
+            'deleteImg' => 'in:true,false',
         ];
     }
 

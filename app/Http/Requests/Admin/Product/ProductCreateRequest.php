@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class CategoryDestroyRequest extends FormRequest
+class ProductCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +24,9 @@ class CategoryDestroyRequest extends FormRequest
     public function rules()
     {
         return [
-            'delete_type' => Rule::in('all', 'singl')
+            'id' => 'integer|nullable',
+            'alias' => 'string|nullable',
+            'title' => 'string|nullable',
         ];
     }
 }

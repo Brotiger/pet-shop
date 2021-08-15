@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class ProductStoreRequest extends FormRequest
 {
@@ -34,7 +33,7 @@ class ProductStoreRequest extends FormRequest
             'img.*' => 'required|image|max:'.env('MAX_IMG_SIZE', 100),
             'charName.*' => 'required|string',
             'charValue.*' => 'required|string',
-            'is_stoke' => Rule::in(['true', 'false']),
+            'is_stoke' => 'in:true,false',
         ];
     }
 

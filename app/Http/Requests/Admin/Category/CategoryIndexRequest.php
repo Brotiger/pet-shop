@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CartAddItemRequest extends FormRequest
+class CategoryIndexRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class CartAddItemRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|integer|exists:products,id',
-            'qty' => 'required|integer'
+            'id' => 'integer|nullable',
+            'alias' => 'string|nullable',
+            'title' => 'string|nullable',
         ];
     }
 }

@@ -8,8 +8,9 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\Characteristic;
-use App\Http\Requests\Admin\ProductStoreRequest;
-use App\Http\Requests\Admin\ProductCreateRequest;
+use App\Http\Requests\Admin\Product\ProductStoreRequest;
+use App\Http\Requests\Admin\Product\ProductCreateRequest;
+use App\Http\Requests\Admin\Product\ProductIndexRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +21,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(ProductIndexRequest $request)
     {
         $filter = [];
         $next_query = [
@@ -28,11 +29,15 @@ class ProductController extends Controller
             'alias' => '',
             'title' => '',
             'category' => '',
+            'category_like' => '',
             'price' => '',
+            'price_type' => '',
             'new_price' => '',
-            'is_stoke'
+            'new_price_type' => '',
+            'is_stoke' => ''
         ];
 
+        
         if($request->id != null){
             $filter[] = ["id", "=", $request->id];
             $next_query['id'] = $request->id;
@@ -45,13 +50,48 @@ class ProductController extends Controller
             $filter[] = ["alias", "like", '%' . $request->alias . '%'];
             $next_query['alias'] = $request->alias;
         }
+        if($request->alias != null){
+            $filter[] = ["alias", "like", '%' . $request->alias . '%'];
+            $next_query['alias'] = $request->alias;
+        }
+        if($request->is_stoke != null){
+            $filter[] = ["is_stoke", "=", $request->is_stoke == 'true'? 1 : 0];
+            $next_query['is_stoke'] = $request->is_stoke;
+        }
+        if($request->price != null){
+            $filter[] = ["price", $request->price_type, $request->price];
+            $next_query['price'] = $request->price;
+            $next_query['price_type'] = $request->price_type;
+        }
+        if($request->new_price != null){
+            $filter[] = ["new_price", $request->new_price_type, $request->new_price];
+            $next_query['new_price'] = $request->new_price;
+            $next_query['new_price_type'] = $request->new_price_type;
+        }
+        
         if($request->category != null){
             $category = Category::where('alias', $request->category)->first();
             $filter[] = ["category_id", "=", $category->id];
             $next_query['category'] = $request->category;
         }
 
-        $products = Product::where($filter)->orderBy('created_at', 'DESC')->paginate(15);
+        if($request->category_like != null){
+            if(strtolower($request->category_like) == 'разное'){
+                $filter[] = ['category_id', '=', null];
+
+                $products = Product::where($filter)->orderBy('created_at', 'DESC')->paginate(15);
+            }else{
+                $products = Product::where($filter)->with('category')->whereHas('category', function($q) use ($request){
+                    $q->where([
+                        ['title', 'like', '%'. $request->category_like . '%']
+                    ]);
+                })->orderBy('created_at', 'DESC')->paginate(15);
+            }
+
+            $next_query['category_like'] = $request->category_like;
+        }else{
+            $products = Product::where($filter)->orderBy('created_at', 'DESC')->paginate(15);
+        }
 
         if($request->ajax()){
             return response([

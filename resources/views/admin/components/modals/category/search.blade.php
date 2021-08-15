@@ -11,13 +11,13 @@
             @csrf
             <div class="modal-body">
                 <div class="input-group">
-                    <input type="number" class="form-control form-control-lg" placeholder="ID" name="id">
+                    <input type="number" class="form-control" placeholder="ID" name="id">
                 </div>
                 <div class="input-group mt-2">
-                    <input type="test" class="form-control form-control-lg" placeholder="Название" name="title">
+                    <input type="test" class="form-control" placeholder="Название" name="title">
                 </div>
                 <div class="input-group mt-2">
-                    <input type="text" class="form-control form-control-lg" placeholder="Псевдоним" name="alias">
+                    <input type="text" class="form-control" placeholder="Псевдоним" name="alias">
                 </div>
             </div>
             <div class="modal-footer justify-content-between">

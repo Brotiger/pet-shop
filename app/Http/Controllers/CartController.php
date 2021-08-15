@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use CartService;
-use App\Http\Requests\CartAddItemRequest;
-use App\Http\Requests\CartDeleteItemRequest;
-use App\Http\Requests\CartQtyItemRequest;
+use App\Http\Requests\Cart\CartAddItemRequest;
+use App\Http\Requests\Cart\CartDeleteItemRequest;
+use App\Http\Requests\Cart\CartQtyItemRequest;
 
 class CartController extends Controller
 {

@@ -3,7 +3,7 @@
 @section('title', 'Все товары')
 @section('content')
 @include('admin.components.warnings.deleteProductWarning')
-@include('admin.components.modals.categoryList.searchCategory')
+@include('admin.components.modals.product.search')
 <section class="content pt-4">
     <div class="container-fluid" id="table">
     <div class="card">

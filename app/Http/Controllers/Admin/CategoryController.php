@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use App\Http\Requests\Admin\CategoryStoreRequest;
-use App\Http\Requests\Admin\CategoryUpdateRequest;
-use App\Http\Requests\Admin\CategoryDestroyRequest;
-use App\Http\Requests\Admin\CategoryIndexRequest;
+use App\Http\Requests\Admin\Category\CategoryStoreRequest;
+use App\Http\Requests\Admin\Category\CategoryUpdateRequest;
+use App\Http\Requests\Admin\Category\CategoryDestroyRequest;
+use App\Http\Requests\Admin\Category\CategoryIndexRequest;
 
 class CategoryController extends Controller
 {

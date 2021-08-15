@@ -3,7 +3,7 @@
 @section('title', 'Все категории')
 @section('content')
 @include('admin.components.warnings.deleteCategoryWarning')
-@include('admin.components.modals.categoryList.searchCategory')
+@include('admin.components.modals.category.search')
 <section class="content pt-4">
     <div class="container-fluid" id="table">
     <div class="card">

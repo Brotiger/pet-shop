@@ -39,6 +39,7 @@ $('body').delegate('#btn-modal-reset', 'click', function(){
         success: function(data){
             $("[error-message]").hide();
             $('#table').html(data.data.html.table);
+            $('#searchForm')[0].reset();
         },
         error: function(data){
             if(data.responseJSON.message){
