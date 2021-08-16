@@ -58,22 +58,70 @@ $('#addForm, #editForm').submit(function(){
             if(data.data.message){
                 toastr.success(data.data.message);
             }
+            if(data.data.html){
+                if(data.data.html.imgBlock){
+                    $("[imgBlock]").remove();
+                    $('#imgBlock').html(data.data.html.imgBlock);
+                }
+                if(data.data.html.charBlock){
+                    $("[imgBlock]").remove();
+                    $('#charList').html(data.data.html.charBlock);
+                }
+            }
         },
         error: function(data){
             $('[error-message]').attr('error-message', 'false');
             let response = data.responseJSON;
             for(key in response.errors){
                 let charValue = key.match(/charValue\.([0-9]+)/);
+                let editCharValue = key.match(/editCharValue\.([0-9]+)/);
                 let charName = key.match(/charName\.([0-9]+)/);
+                let editCharName = key.match(/editCharName\.([0-9]+)/);
                 let img = key.match(/img\.([0-9]+)/);
                 if(charValue){
-                    $(`[char-value-error]`).eq([charValue[1]]).show().text(response.errors[key]).attr('error-message', 'true');
+                    $(`[char-value-error]`)
+                    .eq([charValue[1]])
+                    .show()
+                    .text(response.errors[key])
+                    .attr('error-message', 'true');
+
+                }if(editCharValue){
+                    $(`[name='editCharValue[${editCharValue[1]}]']`)
+                    .parent()
+                    .parent()
+                    .find('[edit-char-value-error]')
+                    .show()
+                    .text(response.errors[key])
+                    .attr('error-message', 'true');
+
+                }if(editCharName){
+                    $(`[name='editCharName[${editCharName[1]}]']`)
+                    .parent()
+                    .parent()
+                    .find('[edit-char-name-error]')
+                    .show()
+                    .text(response.errors[key])
+                    .attr('error-message', 'true');
+
                 }if(charName){
-                    $(`[char-name-error]`).eq([charName[1]]).show().text(response.errors[key]).attr('error-message', 'true');
+                    $(`[char-name-error]`)
+                    .eq([charName[1]])
+                    .show()
+                    .text(response.errors[key])
+                    .attr('error-message', 'true');
+
                 }if(img){
-                    $(`[img-error]`).eq([img[1]]).show().text(response.errors[key]).attr('error-message', 'true');
+                    $(`[img-error]`)
+                    .eq([img[1]])
+                    .show()
+                    .text(response.errors[key])
+                    .attr('error-message', 'true');
+
                 }else{
-                    $(`#error-${key}`).show().text(response.errors[key]).attr('error-message', 'true');
+                    $(`#error-${key}`)
+                    .show()
+                    .text(response.errors[key])
+                    .attr('error-message', 'true');
                 }
             };
 
@@ -129,11 +177,15 @@ $('#searchForm').submit(function(){
 });
 
 $('body').delegate('#btn-modal-reset', 'click', function(){
+    var product_id = $(this).attr('product_id');
     $.ajax({
         type: $(this).attr('method'),
         url: $(this).attr('action'),
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            product_id: product_id
         },
         success: function(data){
             $("[error-message]").hide();
@@ -145,4 +197,20 @@ $('body').delegate('#btn-modal-reset', 'click', function(){
             }
         }
     });
+});
+
+$('body').delegate('[btn-delete-img]', 'click', function(){
+    $(this).parent().hide();
+
+    var attr = $(this).attr('img-id');
+
+    if(typeof attr !== typeof undefined){
+        $(this).prev("[deleteImg]").val('true');
+    }
+});
+
+$('body').delegate('[delete-block-id]', 'click', function(){
+    $(this).parents('[block]').hide().find('[type="text"]').remove();
+
+    $(this).prev("[deleteChar]").val('true');
 });

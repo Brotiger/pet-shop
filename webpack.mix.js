@@ -12,7 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .js('resources/js/singl/forms.js', 'public/js/singl/forms.js')
+    .js('resources/js/singl/category.js', 'public/js/singl/category.js')
     .js('resources/js/singl/deleteCategoryRecord.js', 'public/js/singl/deleteCategoryRecord.js')
     .js('resources/js/singl/deleteProductRecord.js', 'public/js/singl/deleteProductRecord.js')
     .js('resources/js/singl/searchRecord.js', 'public/js/singl/searchRecord.js')

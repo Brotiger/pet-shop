@@ -10,12 +10,15 @@
         <div class="card-header">
           <h3 class="card-title mb-0">Все товары</h3>
           <div class="card-tools">
-            <button type="button" class="btn btn-tool" id="btn-modal-reset" method="GET" action="{{ route('product.index') }}">
+            <button type="button" class="btn btn-tool" id="btn-modal-reset" method="GET" action="{{ route('product.index', ['category' => !empty($_GET['category']) ? $_GET['category'] : null ]) }}">
               <i class="fas fa-redo-alt"></i>
             </button>
             <button type="button" class="btn btn-tool" id="btn-modal-search">
               <i class="fas fa-search"></i>
             </button>
+            <a class="btn btn-tool" href="{{ route('product.create') }}">
+              <i class="fas fa-plus"></i>
+            </a>
           </div>
         </div>
         <div class="card-body p-0">
@@ -97,6 +100,5 @@
 @endsection
 @section('custom_js')
 <script src="/js/singl/deleteProductRecord.js"></script>
-<script src="/js/singl/forms.js"></script>
 <script src="/js/singl/searchRecord.js"></script>
 @endsection

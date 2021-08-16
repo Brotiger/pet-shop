@@ -995,13 +995,22 @@ section
 }
 .product_image img
 {
-	max-width: 100%;
+	max-width: 555px;
+	max-height: 555px;
+	width: 100%;
+	height: 100%;
+	/*max-width: 100%;*/
 }
 .product_content
 {
 	width: 100%;
 	padding-top: 36px;
 	padding-bottom: 38px;
+}
+.product_title
+{
+	overflow: hidden;
+    text-overflow: ellipsis;
 }
 .product_title a
 {

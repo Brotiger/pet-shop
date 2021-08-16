@@ -11,6 +11,8 @@ use App\Models\Characteristic;
 use App\Http\Requests\Admin\Product\ProductStoreRequest;
 use App\Http\Requests\Admin\Product\ProductCreateRequest;
 use App\Http\Requests\Admin\Product\ProductIndexRequest;
+use App\Http\Requests\Admin\Product\ProductEditRequest;
+use App\Http\Requests\Admin\Product\ProductUpdateRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -130,10 +132,16 @@ class ProductController extends Controller
         $categories = Category::where($filter)->orderBy('title')->limit($limit)->get();
 
         if($request->ajax()){
+            $product = null;
+
+            if($request->product_id != null){
+                $product = Product::where('id', $request->product_id)->first();
+            }
+            
             return response([
                 'data' => [
                     'html' => [
-                        'category' => view('admin.ajax.addProduct.category', compact('categories'))->render(),
+                        'category' => view('admin.ajax.addProduct.category', compact('categories', 'product'))->render(),
                     ]
                 ]
             ], 200);
@@ -168,12 +176,13 @@ class ProductController extends Controller
 
             if($request->img){
                 foreach($request->img as $key => $value){
+
                     $productImage = new ProductImage();
 
-                    $productImagePath = Storage::disk('public')->put('uploads/products', $value);
-                    $product_images_arr[] = $productImagePath;
+                    $path = Storage::disk('public')->put('uploads/products', $value);
+                    $product_images_arr[] = $path;
 
-                    $productImage->img = $productImagePath;
+                    $productImage->img = $path;
 
                     $new_product->images()->save($productImage);
                 }
@@ -227,9 +236,24 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(ProductEditRequest $request, Product $product)
     {
-        //
+        $filter = [];
+
+        if($request->id != null){
+            $filter[] = ["id", "=", $request->id];
+        }
+        if($request->title != null){
+            $filter[] = ["title", "like", '%' . $request->title . '%'];
+        }
+        if($request->alias != null){
+            $filter[] = ["alias", "like", '%' . $request->alias . '%'];
+        }
+
+        $limit = env('LIMIT_SEARCH_RECORD', 15);
+        $categories = Category::where($filter)->orderBy('title')->limit($limit)->get();
+
+        return view('admin.product.edit', compact('product', 'categories', 'limit'));
     }
 
     /**
@@ -239,9 +263,97 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductUpdateRequest $request, Product $product)
     {
-        //
+        $product_images_arr = [];
+
+        DB::beginTransaction();
+
+        try {
+            $product->title = $request->title;
+            $product->alias = $request->alias;
+            $product->price = $request->price;
+            $product->new_price = $request->new_price;
+            $product->description = $request->description;
+            $product->category_id = $request->category;
+            $product->is_stoke = $request->is_stoke == 'true'? 1 : 0;
+
+            $product->save();
+
+            if($request->img){
+                foreach($request->img as $key => $value){
+
+                    $productImage = new ProductImage();
+
+                    $path = Storage::disk('public')->put('uploads/products', $value);
+                    $product_images_arr[] = $path;
+
+                    $productImage->img = $path;
+
+                    $product->images()->save($productImage);
+                }
+            }
+
+            if($request->charName){
+                foreach($request->charName as $key => $value){
+                    $productChar = new Characteristic();
+
+                    $productChar->name = $value;
+                    $productChar->value = $request->charValue[$key];
+
+                    $product->chars()->save($productChar);
+                }
+            }
+
+            if($request->deleteImg){
+                foreach($request->deleteImg as $key => $value){
+                    if($value == 'true'){
+                        ProductImage::where('id', $key)->delete();
+                    }
+                }
+            }
+
+            if($request->deleteChar){
+                foreach($request->deleteChar as $key => $value){
+                    if($value == 'true'){
+                        Characteristic::where('id', $key)->delete();
+                    }
+                }
+            }
+
+            if($request->editCharValue){
+                foreach($request->editCharValue as $key => $value){
+                    Characteristic::where('id', $key)->update(['value' => $value]);
+                }
+            }
+
+            if($request->editCharName){
+                foreach($request->editCharName as $key => $value){
+                    Characteristic::where('id', $key)->update(['name' => $value]);
+                }
+            }
+
+            DB::commit();
+
+        } catch (\Throwable $e) {
+            DB::rollback();
+
+            foreach($product_images_arr as $key => $value){
+                Storage::disk('public')->delete($value);
+            }
+
+            throw $e;
+        }
+
+        return response([
+            'data' => [
+                'message' => 'Товар обновлен',
+                'html' => [
+                    'imgBlock' => view('admin.ajax.product.imgBlock', compact('product'))->render(),
+                    'charBlock' => view('admin.ajax.product.charBlock', compact('product'))->render(),
+                ]
+            ]
+        ], 201);
     }
 
     /**

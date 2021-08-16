@@ -1,6 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
-    "/js/singl/forms.js": "/js/singl/forms.js",
+    "/js/singl/category.js": "/js/singl/category.js",
     "/js/singl/deleteCategoryRecord.js": "/js/singl/deleteCategoryRecord.js",
     "/js/singl/deleteProductRecord.js": "/js/singl/deleteProductRecord.js",
     "/js/singl/searchRecord.js": "/js/singl/searchRecord.js",

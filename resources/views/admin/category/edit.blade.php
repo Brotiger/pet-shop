@@ -44,14 +44,20 @@
                         </div>
                         <span class="text-danger" error-message id="error-img" style="display: none"></span>
                     </div>
-                    @if($category->img)
-                    <div>
+                    <div class="form-group">
                         <label for="inputFile">Текущая фотография</label>
-                        <img src="{{ '/storage/' . $category->img }}" style="max-width: 100%">
-                        <input type="hidden" name='deleteImg' value="false">
-                        <input type="button" class="btn btn-danger mt-2" value="Удалить" btn-delete-img>
+                        <div class="input-group" id="imgBlock">
+                            @if($category->img)
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <img src="{{ '/storage/' . $category->img }}" style="max-width: 100%">
+                                </div>
+                                <input type="hidden" name='deleteImg' value="false">
+                                <button type="button" class="btn btn-danger mt-2" btn-delete-img><i class="fas fa-trash"></i></button>
+                            </div>
+                            @endif
+                        </div>
                     </div>
-                    @endif
                 </div>
                 <!-- /.card-body -->
 
@@ -68,15 +74,10 @@
 @section('custom_js')
 <!-- bs-custom-file-input -->
 <script src="/admin/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
-<script src="/js/singl/forms.js"></script>
+<script src="/js/singl/category.js"></script>
 <script>
     $(function () {
     bsCustomFileInput.init();
     });
-</script>
-<script>
-    $('[btn-delete-img]').click(function(){
-        $(this).prev("[name='deleteImg']").val('true');
-    })
 </script>
 @endsection

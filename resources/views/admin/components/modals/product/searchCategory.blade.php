@@ -10,6 +10,9 @@
             <form action="{{ route('product.create') }}" method="GET" id="searchForm">
             @csrf
             <div class="modal-body">
+                @if(!empty($product))
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                @endif
                 <div class="input-group">
                     <input type="number" class="form-control form-control-lg" placeholder="ID" name="id">
                 </div>

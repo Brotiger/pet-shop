@@ -1,3 +1,5 @@
+const { each } = require("jquery");
+
 $('#addForm, #editForm').submit(function(){
     var form = $(this);
     var formData = new FormData(form[0]);
@@ -20,6 +22,10 @@ $('#addForm, #editForm').submit(function(){
             if(data.data.message){
                 toastr.success(data.data.message);
             }
+            if(data.data.html.imgBlock){
+                $('[type="file"]').val('').next('label').html('Выбирете файл');
+                $('#imgBlock').html(data.data.html.imgBlock);
+            }
         },
         error: function(data){
             $('[error-message]').attr('error-message', 'false');
@@ -37,4 +43,9 @@ $('#addForm, #editForm').submit(function(){
     });
 
     return false;
+});
+
+$('body').delegate('[btn-delete-img]', 'click', function(){
+    $(this).parent().hide();
+    $(this).prev("[name='deleteImg']").val('true');
 });

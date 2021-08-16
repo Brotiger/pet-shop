@@ -16,6 +16,9 @@
             <button type="button" class="btn btn-tool" id="btn-modal-search">
               <i class="fas fa-search"></i>
             </button>
+            <a class="btn btn-tool" href="{{ route('category.create') }}">
+              <i class="fas fa-plus"></i>
+            </a>
           </div>
         </div>
         <div class="card-body p-0">
@@ -80,6 +83,5 @@
 @endsection
 @section('custom_js')
 <script src="/js/singl/deleteCategoryRecord.js"></script>
-<script src="/js/singl/forms.js"></script>
 <script src="/js/singl/searchRecord.js"></script>
 @endsection

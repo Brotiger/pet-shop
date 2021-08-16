@@ -8,6 +8,9 @@
             <button type="button" class="btn btn-tool" id="btn-modal-search">
               <i class="fas fa-search"></i>
             </button>
+            <a class="btn btn-tool" href="{{ route('product.create') }}">
+              <i class="fas fa-plus"></i>
+            </a>
           </div>
         </div>
         <div class="card-body p-0">

@@ -86,7 +86,7 @@
                                 <span style="color: #cc0000">Под заказ</span>
                             @endif
 						</div>
-						@if($item->characteristics)
+						@if(count($item->characteristics))
 						<div class="details_text">
 							<label>Характеристики</label>
 							<ul>
@@ -123,22 +123,23 @@
 					</div>
 				</div>
 			</div>
-
+			@if($item->description)
 			<div class="row description_row">
 				<div class="col">
 					<div class="description_title_container">
 						<div class="description_title">Описание</div>
-						<div class="reviews_title"><a href="#">Отзывы <span>(1)</span></a></div>
+						<!--<div class="reviews_title"><a href="#">Отзывы <span>(1)</span></a></div>-->
 					</div>
 					<div class="description_text">
 						<p>{{ $item->description }}</p>
 					</div>
 				</div>
 			</div>
+			@endif
 		</div>
 	</div>
 	
-	@if(!empty($analogs))
+	@if(count($analogs))
 	<!-- Products -->
 
 	<div class="products">

@@ -63,5 +63,5 @@ $(function () {
   bsCustomFileInput.init();
 });
 </script>
-<script src="/js/singl/forms.js"></script>
+<script src="/js/singl/category.js"></script>
 @endsection

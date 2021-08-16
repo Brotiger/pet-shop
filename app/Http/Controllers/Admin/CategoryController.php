@@ -143,7 +143,10 @@ class CategoryController extends Controller
 
         return response([
             'data' => [
-                'message' => 'Категория обновлена' 
+                'message' => 'Категория обновлена',
+                'html' => [
+                    'imgBlock' => view('admin.ajax.category.imgBlock', compact('category'))->render()
+                ]
             ]
         ], 201);
     }

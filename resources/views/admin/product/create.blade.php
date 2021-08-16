@@ -2,7 +2,7 @@
 
 @section('title', 'Добавление товара')
 @section('content')
-@include('admin.components.modals.addProduct.searchCategory')
+@include('admin.components.modals.product.searchCategory')
 <section class="content  pt-4">
     <div class="container-fluid">
         <div style="max-width: 600px">
@@ -89,7 +89,7 @@
                         <div class="form-group">
                             <div class="d-flex justify-content-between form-group">
                                 <label for="inputFile">Фотографии
-                                    <small class="ml-1">(максимальный вес: {{ env('MAX_IMG_SIZE', 100) }} КБ)</small>
+                                    <small class="ml-1">(максимальный вес: {{ env('MAX_IMG_SIZE', 100) }} КБ, соотношение сторон 1x1)</small>
                                 </label>
                                 <button type="button" class="btn btn-primary" id="addPhoto"><i class="fas fa-plus"></i></button>
                             </div>

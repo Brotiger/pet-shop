@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductStoreRequest extends FormRequest
+class ProductUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class ProductStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|unique:products,title',
-            'alias' => 'required|unique:products,alias',
+            'title' => 'required|unique:products,title,'. $this->product->id,
+            'alias' => 'required|unique:products,alias,'. $this->product->id,
             'price' => 'required|integer',
             'new_price' => 'nullable|integer|lt:price',
             'description' => 'nullable|string',
@@ -34,6 +34,10 @@ class ProductStoreRequest extends FormRequest
             'charName.*' => 'required|string',
             'charValue.*' => 'required|string',
             'is_stoke' => 'in:true,false',
+            'deleteImg.*' => 'in:true,false',
+            'deleteChar.*' => 'in:true,false',
+            'editCharName.*' => 'required|string',
+            'editCharValue.*' => 'required|string',
         ];
     }
 
@@ -54,9 +58,13 @@ class ProductStoreRequest extends FormRequest
             'new_price.integer' => 'числовое поле',
             'new_price.lt' => 'новая цена товара должна быть меньше его цены',
             'charName.*.required' => 'название - обязательное поле',
+            'editCharName.*.required' => 'название - обязательное поле',
             'charName.*.string' => 'название - текстовое поле',
+            'editCharName.*.string' => 'название - текстовое поле',
             'charValue.*.required' => 'значение - обязательное поле',
+            'editCharValue.*.required' => 'значение - обязательное поле',
             'charValue.*.string' => 'значение - текстовое поле',
+            'editCharValue.*.string' => 'значение - текстовое поле',
         ];
     }
 }

@@ -34,13 +34,13 @@ class CategoryStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'title.required' => 'Обязательное поле',
-            'title.unique' => 'Должно быть уникальным',
-            'alias.required' => 'Обязательное поле',
-            'alias.unique' => 'Должен быть уникальным',
-            'img.image' => 'Не является изображением',
-            'img.max' => 'Превышен максимальный вес изображения',
-            'description.string' => 'Текстовое поле'
+            'title.required' => 'обязательное поле',
+            'title.unique' => 'должно быть уникальным',
+            'alias.required' => 'обязательное поле',
+            'alias.unique' => 'должен быть уникальным',
+            'img.image' => 'не является изображением',
+            'img.max' => 'превышен максимальный вес изображения',
+            'description.string' => 'текстовое поле'
         ];
     }
 }
