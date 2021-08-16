@@ -31,7 +31,7 @@ $('#addForm, #editForm').submit(function(){
             $('[error-message]').attr('error-message', 'false');
             let response = data.responseJSON;
             for(key in response.errors){
-                $(`#error-${key}`).show().text(response.errors[key]);
+                $(`#error-${key}`).show().text(response.errors[key].join(', '));
                 $(`#error-${key}`).attr('error-message', 'true');
             };
 

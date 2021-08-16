@@ -1,5 +1,5 @@
 $("#addPhoto").on("click", function(){
-    $("#photoList").append(
+    $("#imgList").prepend(
         `<div class="form-group" block imgBlock>`
             + `<div class="input-group">`
                 + `<div class="input-group-prepend">`
@@ -12,7 +12,7 @@ $("#addPhoto").on("click", function(){
                         + `<label class="custom-file-label">Выбирете файл</label>`
                 + `</div>`
             + `</div>`
-            + `<span class="text-danger" error-message style="display: none" img-error></span>`
+            + `<p class="text-danger error-message" error-message style="display: none" img-error></p>`
         + `</div>`);
         bsCustomFileInput.init();
     });
@@ -29,8 +29,8 @@ $("#addChar").on("click", function(){
                 + `<input type="text" name="charName[]" class="form-control" placeholder="Название" required>`
                 + `<input type="text" name="charValue[]" class="form-control" placeholder="Значение" required>`
             + `</div>`
-            + `<div class="text-danger" error-message style="display: none" char-name-error></div>`
-            + `<div class="text-danger" error-message style="display: none" char-value-error></div>`
+            + `<p class="text-danger error-message" error-message style="display: none" char-name-error></p>`
+            + `<p class="text-danger error-message" error-message style="display: none" char-value-error></p>`
         + `</div>`);
         bsCustomFileInput.init();
     });
@@ -64,7 +64,6 @@ $('#addForm, #editForm').submit(function(){
                     $('#imgBlock').html(data.data.html.imgBlock);
                 }
                 if(data.data.html.charBlock){
-                    $("[imgBlock]").remove();
                     $('#charList').html(data.data.html.charBlock);
                 }
             }
@@ -82,7 +81,7 @@ $('#addForm, #editForm').submit(function(){
                     $(`[char-value-error]`)
                     .eq([charValue[1]])
                     .show()
-                    .text(response.errors[key])
+                    .text(response.errors[key].join(', '))
                     .attr('error-message', 'true');
 
                 }if(editCharValue){
@@ -91,7 +90,7 @@ $('#addForm, #editForm').submit(function(){
                     .parent()
                     .find('[edit-char-value-error]')
                     .show()
-                    .text(response.errors[key])
+                    .text(response.errors[key].join(', '))
                     .attr('error-message', 'true');
 
                 }if(editCharName){
@@ -100,27 +99,27 @@ $('#addForm, #editForm').submit(function(){
                     .parent()
                     .find('[edit-char-name-error]')
                     .show()
-                    .text(response.errors[key])
+                    .text(response.errors[key].join(', '))
                     .attr('error-message', 'true');
 
                 }if(charName){
                     $(`[char-name-error]`)
                     .eq([charName[1]])
                     .show()
-                    .text(response.errors[key])
+                    .text(response.errors[key].join(', '))
                     .attr('error-message', 'true');
 
                 }if(img){
                     $(`[img-error]`)
                     .eq([img[1]])
                     .show()
-                    .text(response.errors[key])
+                    .text(response.errors[key].join(', '))
                     .attr('error-message', 'true');
 
                 }else{
                     $(`#error-${key}`)
                     .show()
-                    .text(response.errors[key])
+                    .text(response.errors[key].join(', '))
                     .attr('error-message', 'true');
                 }
             };
@@ -145,7 +144,6 @@ function resetForm(){
 }
 
 $('body').delegate('#btn-modal-search', 'click', function(){
-    console.log('asd');
     $('#modal-search').modal();
 });
 
@@ -202,7 +200,7 @@ $('body').delegate('#btn-modal-reset', 'click', function(){
 $('body').delegate('[btn-delete-img]', 'click', function(){
     $(this).parent().hide();
 
-    var attr = $(this).attr('img-id');
+    var attr = $(this).attr('server-delete');
 
     if(typeof attr !== typeof undefined){
         $(this).prev("[deleteImg]").val('true');

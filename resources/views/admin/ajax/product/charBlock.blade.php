@@ -10,7 +10,7 @@
             <input type="text" name="editCharName[{{ $char->id }}]" class="form-control" placeholder="Название" value="{{ $char->name }}" required>
             <input type="text" name="editCharValue[{{ $char->id }}]" class="form-control" placeholder="Значение" value="{{ $char->value }}" required>
         </div>
-        <div class="text-danger" error-message style="display: none" edit-char-name-error></div>
-        <div class="text-danger" error-message style="display: none" edit-char-value-error></div>
+        <p class="text-danger error-message" error-message style="display: none" edit-char-name-error></p>
+        <p class="text-danger error-message" error-message style="display: none" edit-char-value-error></p>
     </div>
 @endforeach

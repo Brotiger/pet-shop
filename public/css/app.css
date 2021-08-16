@@ -10042,6 +10042,25 @@ table.list tr td {
   font-size: 1.1rem;
 }
 
+.categoryImg {
+  max-height: 555px;
+}
+
+.productImg {
+  max-width: 300px;
+  width: 100%;
+}
+
+p.error-message {
+  text-transform: lowercase;
+  margin-bottom: 0;
+  display: block;
+  margin-bottom: 0;
+}
+p.error-message::first-letter {
+  text-transform: uppercase;
+}
+
 .addForm textarea {
   width: 100%;
   min-height: 200px;

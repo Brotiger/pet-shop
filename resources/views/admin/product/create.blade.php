@@ -17,12 +17,12 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Название*</label>
                         <input type="text" name="title" class="form-control" placeholder="Введите название товара" required>
-                        <span class="text-danger" error-message id="error-title" style="display: none"></span>
+                        <p class="text-danger error-message" error-message id="error-title" style="display: none"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Псевдоним*</label>
                         <input type="text" name="alias" class="form-control" placeholder="Введите псевдоним, который будет использоваться в url" required>
-                        <span class="text-danger" id="error-alias" style="display: none"></span>
+                        <p class="text-danger error-message" id="error-alias" style="display: none"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Цена*
@@ -32,8 +32,8 @@
                             <input type="number" name="price" class="form-control" placeholder="Введите цену товара" required>
                             <input type="number" name="new_price" class="form-control" placeholder="Введите новую цену товара">
                         </div>
-                        <span class="text-danger" id="error-price" style="display: none"></span>
-                        <span class="text-danger" id="error-new_price" style="display: none"></span>
+                        <p class="text-danger error-message" id="error-price" style="display: none"></p>
+                        <p class="text-danger error-message" id="error-new_price" style="display: none"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Категория
@@ -57,13 +57,13 @@
                                 </button>
                             </div>
                         </div>
-                        <span class="text-danger" id="error-category" style="display: none"></span>
+                        <p class="text-danger error-message" id="error-category" style="display: none"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Описание</label>
                         <div>
                             <textarea class="form-control" name="description" placeholder="Введите описание товара"></textarea>
-                            <span class="text-danger" error-message id="error-description" style="display: none"></span>
+                            <p class="text-danger error-message" error-message id="error-description" style="display: none"></p>
                         </div>
                     </div>
                     <div class="form-group">
@@ -93,7 +93,7 @@
                                 </label>
                                 <button type="button" class="btn btn-primary" id="addPhoto"><i class="fas fa-plus"></i></button>
                             </div>
-                            <div id="photoList">
+                            <div id="imgList">
                             </div>
                         </div>
                     </div>

@@ -43,3 +43,23 @@ table.list{
     white-space: nowrap;
     font-size: 1.1rem;
 }
+
+.categoryImg{
+    max-height: 555px;
+}
+
+.productImg{
+    max-width: 300px;
+    width: 100%;
+}
+
+p.error-message{
+    text-transform: lowercase;
+    margin-bottom: 0;
+    display: block;
+    margin-bottom: 0;
+    
+    &::first-letter{
+        text-transform: uppercase;
+    }
+}

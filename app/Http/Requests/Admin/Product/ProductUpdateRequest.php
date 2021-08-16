@@ -30,7 +30,7 @@ class ProductUpdateRequest extends FormRequest
             'new_price' => 'nullable|integer|lt:price',
             'description' => 'nullable|string',
             'category' => 'nullable|exists:categories,id',
-            'img.*' => 'required|dimensions:ratio=1/1|image|max:'.env('MAX_IMG_SIZE', 100),
+            'img.*' => 'required|image|dimensions:ratio=1/1|max:'.env('MAX_IMG_SIZE', 100),
             'charName.*' => 'required|string',
             'charValue.*' => 'required|string',
             'is_stoke' => 'in:true,false',

@@ -18,12 +18,12 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Название*</label>
                         <input type="text" name="title" class="form-control" placeholder="Введите название товара" value="{{ $product->title }}" required>
-                        <span class="text-danger" error-message id="error-title" style="display: none"></span>
+                        <p class="text-danger error-message" error-message id="error-title" style="display: none"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Псевдоним*</label>
                         <input type="text" name="alias" class="form-control" placeholder="Введите псевдоним, который будет использоваться в url" value="{{ $product->alias }}" required>
-                        <span class="text-danger" id="error-alias" style="display: none"></span>
+                        <p class="text-danger error-message" id="error-alias" style="display: none"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Цена*
@@ -33,8 +33,8 @@
                             <input type="number" name="price" class="form-control" placeholder="Введите цену товара" value="{{ $product->price }}" required>
                             <input type="number" name="new_price" class="form-control" placeholder="Введите новую цену товара" value="{{ $product->new_price }}">
                         </div>
-                        <span class="text-danger" id="error-price" style="display: none"></span>
-                        <span class="text-danger" id="error-new_price" style="display: none"></span>
+                        <p class="text-danger error-message" id="error-price" style="display: none"></p>
+                        <p class="text-danger error-message" id="error-new_price" style="display: none"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Категория
@@ -69,13 +69,13 @@
                                 </button>
                             </div>
                         </div>
-                        <span class="text-danger" id="error-category" style="display: none"></span>
+                        <p class="text-danger error-message" id="error-category" style="display: none"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Описание</label>
                         <div>
                             <textarea class="form-control" name="description" placeholder="Введите описание товара">{{ $product->description }}</textarea>
-                            <span class="text-danger" error-message id="error-description" style="display: none"></span>
+                            <p class="text-danger error-message" error-message id="error-description" style="display: none"></p>
                         </div>
                     </div>
                     <div class="form-group">
@@ -106,8 +106,8 @@
                                             <input type="text" name="editCharName[{{ $char->id }}]" class="form-control" placeholder="Название" value="{{ $char->name }}" required>
                                             <input type="text" name="editCharValue[{{ $char->id }}]" class="form-control" placeholder="Значение" value="{{ $char->value }}" required>
                                         </div>
-                                        <div class="text-danger" error-message style="display: none" edit-char-name-error></div>
-                                        <div class="text-danger" error-message style="display: none" edit-char-value-error></div>
+                                        <p class="text-danger error-message" error-message style="display: none" edit-char-name-error></p>
+                                        <p class="text-danger error-message" error-message style="display: none" edit-char-value-error></p>
                                     </div>
                                 @endforeach
                             </div>
@@ -121,22 +121,19 @@
                                 </label>
                                 <button type="button" class="btn btn-primary" id="addPhoto"><i class="fas fa-plus"></i></button>
                             </div>
-                            <div id="photoList"> 
-                            </div>
-                        </div>
-                    </div>
-                        <div class="form-group">
-                            <label for="inputFile">Текущии фотографии</label>
-                            <div id="imgBlock">
-                            @foreach($product->images as $image)
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <img src="{{ '/storage/' . $image->img }}" style="max-width: 100%">
-                                    </div>
-                                    <input type="hidden" name='deleteImg[{{ $image->id }}]' value="false" deleteImg>
-                                    <button type="button" class="btn btn-danger mt-2" btn-delete-img server-delete><i class="fas fa-trash"></i></button>
+                            <div id="imgList"> 
+                                <div id="imgBlock">
+                                    @foreach($product->images as $image)
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <img src="{{ '/storage/' . $image->img }}" class="productImg">
+                                            </div>
+                                            <input type="hidden" name='deleteImg[{{ $image->id }}]' value="false" deleteImg>
+                                            <button type="button" class="btn btn-danger mt-2" btn-delete-img server-delete><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    @endforeach
                                 </div>
-                            @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>

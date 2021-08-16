@@ -16,18 +16,18 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Название*</label>
                         <input type="text" name="title" class="form-control" placeholder="Введите название категории" required>
-                        <span class="text-danger" error-message id="error-title" style="display: none"></span>
+                        <p class="text-danger error-message" error-message id="error-title" style="display: none"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Псевдоним*</label>
                         <input type="text" name="alias" class="form-control" placeholder="Введите псевдоним, который будет использоваться в url" required>
-                        <span class="text-danger" id="error-alias" style="display: none"></span>
+                        <p class="text-danger error-message" id="error-alias" style="display: none"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Описание</label>
                         <div>
                             <textarea class="form-control" name="description" placeholder="Введите описание категории"></textarea>
-                            <span class="text-danger" error-message id="error-description" style="display: none"></span>
+                            <p class="text-danger error-message" error-message id="error-description" style="display: none"></p>
                         </div>
                     </div>
                     <div class="form-group">
@@ -40,7 +40,7 @@
                                 <label class="custom-file-label" for="inputFile">Выбирете файл</label>
                             </div>
                         </div>
-                        <span class="text-danger" error-message id="error-img" style="display: none"></span>
+                        <p class="text-danger error-message" error-message id="error-img" style="display: none"></p>
                     </div>
                 </div>
                 <!-- /.card-body -->

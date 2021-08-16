@@ -141,7 +141,7 @@ class ProductController extends Controller
             return response([
                 'data' => [
                     'html' => [
-                        'category' => view('admin.ajax.addProduct.category', compact('categories', 'product'))->render(),
+                        'category' => view('admin.ajax.product.searchCategory', compact('categories', 'product'))->render(),
                     ]
                 ]
             ], 200);

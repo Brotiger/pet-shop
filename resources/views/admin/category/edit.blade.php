@@ -18,22 +18,22 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Название*</label>
                         <input type="text" name="title" value="{{ $category->title }}" class="form-control" placeholder="Введите название категории" required>
-                        <span class="text-danger" error-message id="error-title" style="display: none"></span>
+                        <p class="text-danger error-message" error-message id="error-title" style="display: none"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Псевдоним*</label>
                         <input type="text" name="alias" value="{{ $category->alias }}" class="form-control" placeholder="Введите псевдоним, который будет использоваться в url" required>
-                        <span class="text-danger" error-message id="error-alias" style="display: none"></span>
+                        <p class="text-danger error-message" error-message id="error-alias" style="display: none"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Описание</label>
                         <div>
                             <textarea class="form-control" name="description" placeholder="Введите описание категории">{{ $category->description }}</textarea>
-                            <span class="text-danger" error-message id="error-description" style="display: none"></span>
+                            <p class="text-danger error-message" error-message id="error-description" style="display: none"></p>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputFile">Новая фотография
+                        <label for="inputFile">Фотография
                             <small class="ml-1">(максимальный вес: {{ env('MAX_LOGO_SIZE', 200) }} КБ)</small>
                         </label>
                         <div class="input-group">
@@ -42,21 +42,18 @@
                                 <label class="custom-file-label" for="inputFile">Выбирете файл</label>
                             </div>
                         </div>
-                        <span class="text-danger" error-message id="error-img" style="display: none"></span>
+                        <p class="text-danger error-message" error-message id="error-img" style="display: none"></p>
                     </div>
-                    <div class="form-group">
-                        <label for="inputFile">Текущая фотография</label>
-                        <div class="input-group" id="imgBlock">
-                            @if($category->img)
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <img src="{{ '/storage/' . $category->img }}" style="max-width: 100%">
-                                </div>
-                                <input type="hidden" name='deleteImg' value="false">
-                                <button type="button" class="btn btn-danger mt-2" btn-delete-img><i class="fas fa-trash"></i></button>
+                    <div id="imgBlock">
+                        @if($category->img)
+                        <div class="form-group">
+                            <div class="input-group">
+                                <img src="{{ '/storage/' . $category->img }}" style="max-width: 100%" class="categoryImg">
                             </div>
-                            @endif
+                            <input type="hidden" name='deleteImg' value="false">
+                            <button type="button" class="btn btn-danger mt-2" btn-delete-img><i class="fas fa-trash"></i></button>
                         </div>
+                        @endif
                     </div>
                 </div>
                 <!-- /.card-body -->
