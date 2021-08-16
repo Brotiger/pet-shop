@@ -27,6 +27,7 @@ class CategoryIndexRequest extends FormRequest
             'id' => 'integer|nullable',
             'alias' => 'string|nullable',
             'title' => 'string|nullable',
+            'recordCount' => 'nullable|numeric|min:1|max:100',
         ];
     }
 }

@@ -16,6 +16,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/singl/deleteCategoryRecord.js', 'public/js/singl/deleteCategoryRecord.js')
     .js('resources/js/singl/deleteProductRecord.js', 'public/js/singl/deleteProductRecord.js')
     .js('resources/js/singl/searchRecord.js', 'public/js/singl/searchRecord.js')
+    .js('resources/js/singl/tableSettings.js', 'public/js/singl/tableSettings.js')
     .js('resources/js/singl/product.js', 'public/js/singl/product.js')
     .sass('resources/sass/app.scss', 'public/css')
     .sourceMaps();

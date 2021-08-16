@@ -16,7 +16,6 @@ $('#searchForm').submit(function(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(data){
-            $("[error-message]").hide();
             $('#table').html(data.data.html.table);
         },
         error: function(data){

@@ -34,6 +34,7 @@ class ProductIndexRequest extends FormRequest
             'new_price' => 'nullable|integer',
             'new_price_type' => 'nullable|in:>,<,=,>=,<=',
             'is_stoke' => 'nullable|in:true,false',
+            'recordCount' => 'nullable|numeric|min:1|max:100',
         ];
     }
 }

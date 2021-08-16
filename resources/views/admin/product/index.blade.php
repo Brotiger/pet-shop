@@ -4,6 +4,7 @@
 @section('content')
 @include('admin.components.warnings.deleteProductWarning')
 @include('admin.components.modals.product.search')
+@include('admin.components.modals.product.tableSettings')
 <section class="content pt-4">
     <div class="container-fluid" id="table">
     <div class="card">
@@ -15,6 +16,9 @@
             </button>
             <button type="button" class="btn btn-tool" id="btn-modal-search">
               <i class="fas fa-search"></i>
+            </button>
+            <button type="button" class="btn btn-tool" id="btn-modal-settings">
+              <i class="fas fa-cog"></i>
             </button>
             <a class="btn btn-tool" href="{{ route('product.create') }}">
               <i class="fas fa-plus"></i>
@@ -101,4 +105,5 @@
 @section('custom_js')
 <script src="/js/singl/deleteProductRecord.js"></script>
 <script src="/js/singl/searchRecord.js"></script>
+<script src="/js/singl/tableSettings.js"></script>
 @endsection

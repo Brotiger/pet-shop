@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Settings;
 use App\Models\ProductImage;
 use App\Models\Characteristic;
 use App\Http\Requests\Admin\Product\ProductStoreRequest;
@@ -16,6 +17,7 @@ use App\Http\Requests\Admin\Product\ProductUpdateRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -78,22 +80,48 @@ class ProductController extends Controller
             $next_query['category'] = $request->category;
         }
 
+        $productTableSettings = Settings::where([
+            ['user_id', '=', Auth::user()->id],
+            ['name', '=', 'productTable']
+        ]);
+
+        if($request->recordCount != null){
+            if($productTableSettings->exists()){
+                $productTableSettings->first()->update(['value' => $request->recordCount]);
+            }else{
+                $new_settings = new Settings();
+                $new_settings->user_id = Auth::user()->id;
+                $new_settings->name = 'productTable';
+                $new_settings->value = $request->recordCount;
+
+                $new_settings->save();
+            }
+
+            $limit = $request->recordCount;
+        }else{
+            if($productTableSettings->exists()){
+                $limit = $productTableSettings->first()->value;
+            }else{
+                $limit = 15;
+            }
+        }
+
         if($request->category_like != null){
             if(Str::lower($request->category_like) == 'разное'){
                 $filter[] = ['category_id', '=', null];
 
-                $products = Product::where($filter)->orderBy('created_at', 'DESC')->paginate(15);
+                $products = Product::where($filter)->orderBy('created_at', 'DESC')->paginate($limit);
             }else{
                 $products = Product::where($filter)->with('category')->whereHas('category', function($q) use ($request){
                     $q->where([
                         ['title', 'like', '%'. $request->category_like . '%']
                     ]);
-                })->orderBy('created_at', 'DESC')->paginate(15);
+                })->orderBy('created_at', 'DESC')->paginate($limit);
             }
 
             $next_query['category_like'] = $request->category_like;
         }else{
-            $products = Product::where($filter)->orderBy('created_at', 'DESC')->paginate(15);
+            $products = Product::where($filter)->orderBy('created_at', 'DESC')->paginate($limit);
         }
 
         if($request->ajax()){
@@ -106,7 +134,7 @@ class ProductController extends Controller
             ], 200);
         }
 
-        return view('admin.product.index', compact('products', 'next_query'));
+        return view('admin.product.index', compact('products', 'next_query', 'limit'));
     }
 
     /**

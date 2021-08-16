@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Settings;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\Category\CategoryStoreRequest;
 use App\Http\Requests\Admin\Category\CategoryUpdateRequest;
 use App\Http\Requests\Admin\Category\CategoryDestroyRequest;
 use App\Http\Requests\Admin\Category\CategoryIndexRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -40,7 +42,33 @@ class CategoryController extends Controller
             $next_query['alias'] = $request->alias;
         }
 
-        $categories = Category::where($filter)->orderBy('created_at', 'DESC')->paginate(15);
+        $categoryTableSettings = Settings::where([
+            ['user_id', '=', Auth::user()->id],
+            ['name', '=', 'categoryTable']
+        ]);
+
+        if($request->recordCount != null){
+            if($categoryTableSettings->exists()){
+                $categoryTableSettings->first()->update(['value' => $request->recordCount]);
+            }else{
+                $new_settings = new Settings();
+                $new_settings->user_id = Auth::user()->id;
+                $new_settings->name = 'categoryTable';
+                $new_settings->value = $request->recordCount;
+
+                $new_settings->save();
+            }
+
+            $limit = $request->recordCount;
+        }else{
+            if($categoryTableSettings->exists()){
+                $limit = $categoryTableSettings->first()->value;
+            }else{
+                $limit = 15;
+            }
+        }
+
+        $categories = Category::where($filter)->orderBy('created_at', 'DESC')->paginate($limit);
 
         if($request->ajax()){
             return response([
@@ -52,7 +80,7 @@ class CategoryController extends Controller
             ], 200);
         }
 
-        return view('admin.category.index', compact('categories', 'next_query'));
+        return view('admin.category.index', compact('categories', 'next_query', 'limit'));
     }
 
     /**
