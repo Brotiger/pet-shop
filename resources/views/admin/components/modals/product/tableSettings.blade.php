@@ -7,7 +7,7 @@
                 <span aria-hidden="true">×</span>
             </button>
             </div>
-            <form action="{{ route('product.index') }}" method="GET" id="settingsForm">
+            <form action="{{ route('product.index', ['category' => !empty($_GET['category']) ? $_GET['category'] : null ]) }}" method="GET" id="settingsForm">
             @csrf
             <div class="modal-body">
                 <div class="input-group d-flex align-items-center">
